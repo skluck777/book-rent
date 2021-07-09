@@ -28,24 +28,25 @@
 # 서비스 시나리오
 
 기능적 요구사항
-1. 사용자가 이용가능한 킥보드 위치를 조회한다.
-1. 이용가능한 킥보드를 예약한다.
-1. 예상 이용시간 만큼에 대해서 선불결제 한다.
-1. 이용가능 상태가 되면 푸쉬(카톡)로 알림을 보낸다.
-1. 킥보드를 이용한다.
-1. 사용자는 중간중간 대여 상황을 확인한다.
-1. 반납시간이 임박한 경우 푸쉬(카톡)로 알림을 보낸다.
-1. 반납신청을 한다.
+1. 사용자가 킥보드를 예약한다.(Command)
+1. 예약한 킥보드에 대해서 결제한다.(Command)
+1. 결제 후 사용승인(Policy)이 되면 킥보드를 대여한다.(Command)
+1. 킥보드가 대여가 되면 (재고조정(Policy)) 재고가 감소된다.(Command)
+1. 사용자가 킥보드 예약을 취소한다.(Command)
+1. 예약을 취소하면(Policy) 결제가 취소된다.(Command)
+1. 사용자가 킥보드를 반납한다.(Command)
+1. 반납요청(Command)이 확인되면(Policy&Command) 재고가 증가한다.(Command)
+1. 사용자는 대여상태를 대시보드에서 확인한다.
 
 비기능적 요구사항
 1. 트랜잭션
     1. 결제가 되지 않은 예약 건은 아예 거래가 성립되지 않아야 한다 -> Sync 호출
 1. 장애격리
-    1. 알림 기능이 수행되지 않더라도 대여는 365일 24시간 가능해야 한다 -> Async (event-driven), Eventual Consistency
+    1. 대여 기능이 수행되지 않더라도 예약는 365일 24시간 가능해야 한다 -> Async (event-driven), Eventual Consistency
     1. 결제시스템이 과중되면 사용자를 잠시동안 받지 않고 결제를 잠시후에 하도록 유도한다 -> Circuit breaker, fallback
 1. 성능
     1. 사용자가 자주 예약관리에서 확인할 수 있는 예약상태를 예약시스템(프론트엔드)에서 확인할 수 있어야 한다 -> CQRS
-    1. 이용시간에 따라 카톡 등으로 알림을 줄 수 있어야 한다 -> Event driven
+    1. 예약상태에 따라 카톡 등으로 알림을 줄 수 있어야 한다 -> Event driven
 
 
 # 체크포인트
@@ -107,6 +108,57 @@
 
 
 # 분석/설계
+
+
+## AS-IS 조직 (Horizontally-Aligned)
+  ![image](https://user-images.githubusercontent.com/31404198/125080475-ccab6900-e0ff-11eb-819f-7fdd7c12d9d6.png)
+
+## TO-BE 조직 (Vertically-Aligned)
+  ![image](https://user-images.githubusercontent.com/31404198/125080676-0ed4aa80-e100-11eb-8707-e7a178193d14.png)
+
+## Event Storming 결과
+* MSAEz 로 모델링한 이벤트스토밍 결과:  URL 연결
+
+
+### 이벤트 도출
+![image](https://user-images.githubusercontent.com/31404198/125080856-48a5b100-e100-11eb-90d4-a738c74118ff.png)
+
+### 부적격 이벤트 탈락
+![image](https://user-images.githubusercontent.com/31404198/125080894-53f8dc80-e100-11eb-8fc8-fe760889d6ea.png)
+
+    - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
+
+### 액터, 커맨드 부착하여 읽기 좋게
+![image](https://user-images.githubusercontent.com/31404198/125081045-830f4e00-e100-11eb-810c-f3d93b810b54.png)
+
+### 어그리게잇으로 묶기
+![image](https://user-images.githubusercontent.com/31404198/125081386-e8633f00-e100-11eb-8b8a-f8383379072a.png)
+
+    - 예약, 대여처리, 결제정보, 재고는 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
+
+### 바운디드 컨텍스트로 묶기
+
+![image](https://user-images.githubusercontent.com/31404198/125081538-16488380-e101-11eb-9f30-d8688c5d965c.png)
+
+    - 도메인 서열 분리 
+        - Core Domain:  예약(front), 대여 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 예약의 경우 1주일 1회 미만, 대여의 경우 1개월 1회 미만
+        - Supporting Domain:   마케팅, 고객 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
+        - General Domain:   결제 : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
+
+### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
+
+![image](https://user-images.githubusercontent.com/31404198/125081926-8a832700-e101-11eb-8f7d-7a32cd4189ab.png)
+
+### 폴리시의 이동과 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
+
+![image](https://user-images.githubusercontent.com/31404198/125081998-9ec72400-e101-11eb-942f-a5beec455466.png)
+
+### 완성된 1차 모형
+
+이미지 추가....
+
+    - View Model 추가
+
 
 
 # 구현
