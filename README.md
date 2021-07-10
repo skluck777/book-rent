@@ -140,8 +140,8 @@
 ![image](https://user-images.githubusercontent.com/31404198/125081538-16488380-e101-11eb-9f30-d8688c5d965c.png)
 
     - 도메인 서열 분리 
-        - Core Domain:  예약(front), 대여 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 예약의 경우 1주일 1회 미만, 대여의 경우 1개월 1회 미만
-        - Supporting Domain:   마케팅, 고객 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
+        - Core Domain:  예약(front) : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 예약의 경우 1주일 1회 미만, 대여의 경우 1개월 1회 미만
+        - Supporting Domain:   대여 : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
         - General Domain:   결제 : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
 
 ### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
@@ -158,7 +158,42 @@
 
     - View Model 추가
 
+### 1차 완성본에 대한 기능적/비기능적 요구사항을 커버하는지 검증
 
+![image](https://user-images.githubusercontent.com/31404198/125151159-1a67b600-e180-11eb-930c-3926a9d210cd.png)
+
+    - 사용자가 킥보드 선택 후 예약한다. (ok)
+    - 예약한 킥보드에 대해서 결제한다. (ok)
+    - 결제 후 사용승인이 되면 킥보드를 대여한다. (ok)
+    - 킥보드가 대여가 되면 재고가 감소된다. (ok)
+
+![image](https://user-images.githubusercontent.com/31404198/125151183-42efb000-e180-11eb-85c9-e4e4630da31a.png)
+
+    - 사용자가 킥보드 예약을 취소한다. (ok)
+    - 예약을 취소하면 결제가 취소된다. (ok)
+
+![image](https://user-images.githubusercontent.com/31404198/125151257-661a5f80-e180-11eb-933b-1eb161319d13.png)
+
+    - 사용자가 킥보드를 반납한다. (ok)
+    - 반납요청이 확인되면 재고가 증가한다. (ok)
+    - 사용자는 대여상태를 대시보드에서 확인한다. (View-green sticker 의 추가로 ok)
+
+### 비기능 요구사항에 대한 검증
+
+![image](https://user-images.githubusercontent.com/31404198/125151375-9feb6600-e180-11eb-93a1-5070e3ffbafc.png)
+
+    - 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리
+    - 고객 예약시 결제처리:  결제가 완료되지 않은 예약은 절대 대여를 할 수 없기 때문에, ACID 트랜잭션 적용. 예약완료시 결제처리에 대해서는 Request-Response 방식 처리
+    - 결제 완료시 대여연결 및 재고처리:  예약(front)에서 대여 마이크로서비스로 대여요청이 전달되는 과정에 있어서 대여 마이크로 서비스가 별도의 배포주기를 가지기 때문에 Eventual Consistency 방식으로 트랜잭션 처리함.
+    - 나머지 모든 inter-microservice 트랜잭션: 예약상태, 대여상태 등 모든 이벤트에 대해 카톡을 처리하는 등, 데이터 일관성의 시점이 크리티컬하지 않은 모든 경우가 대부분이라 판단, Eventual Consistency 를 기본으로 채택함.
+
+## 헥사고날 아키텍처 다이어그램 도출
+    
+![image](https://user-images.githubusercontent.com/31404198/125151426-f8bafe80-e180-11eb-9229-d3d745d80243.png)
+
+    - Chris Richardson, MSA Patterns 참고하여 Inbound adaptor와 Outbound adaptor를 구분함
+    - 호출관계에서 PubSub 과 Req/Resp 를 구분함
+    - 서브 도메인과 바운디드 컨텍스트의 분리:  각 팀의 KPI 별로 아래와 같이 관심 구현 스토리를 나눠가짐
 
 # 구현
 
