@@ -3,24 +3,24 @@ package sharedmobility;
 
 public class PaymentApproved extends AbstractEvent {
 
-    private String id;
-    private String orderId;
+    private Long payId;
+    private Long orderId;
     private Long price;
-    private String status;
     private String payDate;
+    private String payStatus;
 
-    public String getId() {
-        return id;
+    public Long getPayId() {
+        return payId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPayId(Long payId) {
+        this.payId = payId;
     }
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
     public Long getPrice() {
@@ -30,19 +30,19 @@ public class PaymentApproved extends AbstractEvent {
     public void setPrice(Long price) {
         this.price = price;
     }
-    public String getPaymentState() {
-        return status;
-    }
-
-    public void setPaymentState(String status) {
-        this.status = status;
-    }
     public String getPayDate() {
         return payDate;
     }
 
     public void setPayDate(String payDate) {
         this.payDate = payDate;
+    }
+    public String getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
     }
 }
 

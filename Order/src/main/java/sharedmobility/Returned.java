@@ -2,28 +2,21 @@ package sharedmobility;
 
 public class Returned extends AbstractEvent {
 
-    private Long id;
-    private String orderState;
+    private Long orderId;
     private String returnDate;
-    private String customerId;
+    private Long customerId;
+    private String orderStatus;
 
     public Returned(){
         super();
     }
 
-    public Long getId() {
-        return id;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getOrderState() {
-        return orderState;
-    }
-
-    public void setOrderState(String orderState) {
-        this.orderState = orderState;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
     public String getReturnDate() {
         return returnDate;
@@ -32,11 +25,18 @@ public class Returned extends AbstractEvent {
     public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
     }
-    public String getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

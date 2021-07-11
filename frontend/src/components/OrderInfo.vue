@@ -24,10 +24,16 @@
     <v-card-text style = "margin-left:-15px; margin-top:10px;">
 
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
-            <v-text-field label="Status" v-model="value.status"/>
+            <v-text-field type="number" label="OrderId" v-model="value.orderId"/>
           </div>
           <div class="grey--text ml-4" v-else>
-            Status :  {{value.status }}
+            OrderId :  {{value.orderId }}
+          </div>
+          <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
+            <v-text-field label="OrderStatus" v-model="value.orderStatus"/>
+          </div>
+          <div class="grey--text ml-4" v-else>
+            OrderStatus :  {{value.orderStatus }}
           </div>
 
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
@@ -52,12 +58,11 @@
           </div>
 
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
-            <v-text-field label="CustomerId" v-model="value.customerId"/>
+            <v-text-field type="number" label="CustomerId" v-model="value.customerId"/>
           </div>
           <div class="grey--text ml-4" v-else>
             CustomerId :  {{value.customerId }}
           </div>
-
 
     </v-card-text>
 

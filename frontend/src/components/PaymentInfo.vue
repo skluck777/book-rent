@@ -24,12 +24,17 @@
     <v-card-text style = "margin-left:-15px; margin-top:10px;">
 
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
-            <v-text-field label="OrderId" v-model="value.orderId"/>
+            <v-text-field type="number" label="PayId" v-model="value.payId"/>
+          </div>
+          <div class="grey--text ml-4" v-else>
+            PayId :  {{value.payId }}
+          </div>
+          <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
+            <v-text-field type="number" label="OrderId" v-model="value.orderId"/>
           </div>
           <div class="grey--text ml-4" v-else>
             OrderId :  {{value.orderId }}
           </div>
-
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
             <v-text-field type="number" label="Price" v-model="value.price"/>
           </div>
@@ -41,6 +46,20 @@
           </div>
           <div class="grey--text ml-4" v-else>
             PayDate :  {{value.payDate }}
+          </div>
+
+          <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
+            <v-text-field label="PayStatus" v-model="value.payStatus"/>
+          </div>
+          <div class="grey--text ml-4" v-else>
+            PayStatus :  {{value.payStatus }}
+          </div>
+
+          <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
+            <v-text-field label="PayCancelDate" v-model="value.payCancelDate"/>
+          </div>
+          <div class="grey--text ml-4" v-else>
+            PayCancelDate :  {{value.payCancelDate }}
           </div>
 
 

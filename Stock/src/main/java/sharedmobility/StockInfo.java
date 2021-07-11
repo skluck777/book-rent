@@ -11,45 +11,47 @@ public class StockInfo {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private String id;
-    private String orderId;
-    private String rentId;
+    private Long stockId;
+    private Long orderId;
+    private Long rentId;
+    private Long stockAmt;
 
+    // 엔티티 저장 후 발동
     @PostPersist
     public void onPostPersist(){
-        ReducedStock reducedStock = new ReducedStock();
-        BeanUtils.copyProperties(this, reducedStock);
-        reducedStock.publishAfterCommit();
-
-        StockIncreased stockIncreased = new StockIncreased();
-        BeanUtils.copyProperties(this, stockIncreased);
-        stockIncreased.publishAfterCommit();
-
+        if(this.stockAmt == -1){
+            StockReduced stockReduced = new StockReduced();
+            BeanUtils.copyProperties(this, stockReduced);
+            stockReduced.publishAfterCommit();
+        }else if(this.stockAmt == 1){
+            StockIncreased stockIncreased = new StockIncreased();
+            BeanUtils.copyProperties(this, stockIncreased);
+            stockIncreased.publishAfterCommit();
+        }
     }
 
-    public String getId() {
-        return id;
+     public Long getStockId() {
+        return stockId;
     }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
     }
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
-
-    public void setOrderId(String orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
-    public String getRentId() {
+    public Long getRentId() {
         return rentId;
     }
-
-    public void setRentId(String rentId) {
+    public void setRentId(Long rentId) {
         this.rentId = rentId;
     }
-
-
-
-
+    public Long getStockAmt() {
+        return stockAmt;
+    }
+    public void setStockAmt(Long stockAmt) {
+        this.stockAmt = stockAmt;
+    }
 }

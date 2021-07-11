@@ -1,5 +1,8 @@
 package sharedmobility;
 import sharedmobility.config.kafka.KafkaProcessor;
+
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

@@ -9,55 +9,111 @@ public class Dashboard {
 
         @Id
         @GeneratedValue(strategy=GenerationType.AUTO)
-        private String id;
-        private String customerId;
-        private String orderId;
-        private String paymentId;
-        private String rentId;
-        private String paymentStatus;
+        private Long dashboardId;
+        private Long customerId;
+        private Long orderId;
+        private Long paymentId;
+        private Long rentId;
+        private String payStatus;
+        private String orderStatus;
+        private String orderDate;
+        private String cancelDate;
+        private String returnDate;
+        private String payDate;
+        private Long price;
+        private String payCancelDate;
 
 
-        public String getId() {
-            return id;
+        public Long getDashboardId() {
+            return dashboardId;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setDashboardId(Long dashboardId) {
+            this.dashboardId = dashboardId;
         }
-        public String getCustomerId() {
+        public Long getCustomerId() {
             return customerId;
         }
 
-        public void setCustomerId(String customerId) {
+        public void setCustomerId(Long customerId) {
             this.customerId = customerId;
         }
-        public String getOrderId() {
+        public Long getOrderId() {
             return orderId;
         }
 
-        public void setOrderId(String orderId) {
+        public void setOrderId(Long orderId) {
             this.orderId = orderId;
         }
-        public String getPaymentId() {
+        public Long getPaymentId() {
             return paymentId;
         }
 
-        public void setPaymentId(String paymentId) {
+        public void setPaymentId(Long paymentId) {
             this.paymentId = paymentId;
         }
-        public String getRentId() {
+        public Long getRentId() {
             return rentId;
         }
 
-        public void setRentId(String rentId) {
+        public void setRentId(Long rentId) {
             this.rentId = rentId;
         }
-        public String getPaymentStatus() {
-            return paymentStatus;
+        public String getPayStatus() {
+            return payStatus;
         }
 
-        public void setPaymentStatus(String paymentStatus) {
-            this.paymentStatus = paymentStatus;
+        public void setPayStatus(String payStatus) {
+            this.payStatus = payStatus;
+        }
+        public String getOrderStatus() {
+            return orderStatus;
+        }
+
+        public void setOrderStatus(String orderStatus) {
+            this.orderStatus = orderStatus;
+        }
+        public String getOrderDate() {
+            return orderDate;
+        }
+
+        public void setOrderDate(String orderDate) {
+            this.orderDate = orderDate;
+        }
+        public String getCancelDate() {
+            return cancelDate;
+        }
+
+        public void setCancelDate(String cancelDate) {
+            this.cancelDate = cancelDate;
+        }
+        public String getReturnDate() {
+            return returnDate;
+        }
+
+        public void setReturnDate(String returnDate) {
+            this.returnDate = returnDate;
+        }
+        public String getPayDate() {
+            return payDate;
+        }
+
+        public void setPayDate(String payDate) {
+            this.payDate = payDate;
+        }
+        public Long getPrice() {
+            return price;
+        }
+
+        public void setPrice(Long price) {
+            this.price = price;
+        }
+        public String getPayCancelDate() {
+            return payCancelDate;
+        }
+
+        public void setPayCancelDate(String payCancelDate) {
+            this.payCancelDate = payCancelDate;
         }
 
 }

@@ -2,41 +2,41 @@ package sharedmobility;
 
 public class PaymentCanceled extends AbstractEvent {
 
-    private String id;
-    private String orderId;
-    private String price;
-    private String status;
+    private Long orderId;
+    private String payStatus;
+    private Long payId;
+    private String payCancelDate;
 
     public PaymentCanceled(){
         super();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
-    public String getPrice() {
-        return price;
+    public String getPayStatus() {
+        return payStatus;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
     }
-    public String getStatus() {
-        return status;
+    public Long getPayId() {
+        return payId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPayId(Long payId) {
+        this.payId = payId;
+    }
+    public String getPayCancelDate() {
+        return payCancelDate;
+    }
+
+    public void setPayCancelDate(String payCancelDate) {
+        this.payCancelDate = payCancelDate;
     }
 }

@@ -1,0 +1,46 @@
+1. vs code를 이용해서 소스코드 폴더 오픈
+
+2. 주키퍼실행
+bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+
+3. 카프카실행
+bin\windows\kafka-server-start.bat config\server.properties
+
+4. 카프카 토픽 확인
+bin\windows\kafka-topics.bat -bootstrap-server localhost:9092 --list localhost:9092
+
+5. 카프카 이벤트 확인
+bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic sharedmobility --from-beginning
+
+6. order 실행
+OrderInfo.java 파일에서 32번째줄 변경
+   - 변경 전 : Application.applicationContext.getBean(sharedmobility.external.PaymentInfoService.class)
+   - 변경 후 : OrderApplication.applicationContext.getBean(sharedmobility.external.PaymentInfoService.class)
+   
+order 디렉토리 밑 PaymetInfoService.java 파일에서 12번째줄 변경
+   - 변경 전 : @FeignClient(name="Payment", url="payment:8080")
+   - 변경 후 : @FeignClient(name="Payment", url="http://localhost:8083")
+
+order 디렉토리에서 pom.xml 파일 존재하는 위치에서 mvn spring-boot:run
+
+7. payment 실행
+payment 디렉토리에서 pom.xml 파일 존재하는 위치에서 mvn spring-boot:run
+
+[사용]
+1. 사용 신청
+http POST localhost:8088/order customerId=99 
+http POST localhost:8088/order customerId=99 time=3 
+>> 시간*1000원 가격, default time = 0
+
+2. 사용 신청 내역 확인
+http localhost:8088/order/1	 >> USE 상태 확인
+http localhost:8088/payment/1  >> PAID 상태 확인
+http localhost:8088/rent/1  >> APPROVE 상태 확인
+
+3. 렌트 신청
+http PUT localhost:8088/rent/1
+
+4. 렌트 상태 확인
+http localhost:8088/rent >> RENT 상태 확인
+
+5. 렌트 후 차감 확인

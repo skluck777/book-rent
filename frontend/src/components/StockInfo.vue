@@ -24,19 +24,29 @@
     <v-card-text style = "margin-left:-15px; margin-top:10px;">
 
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
-            <v-text-field label="OrderId" v-model="value.orderId"/>
+            <v-text-field type="number" label="StockId" v-model="value.stockId"/>
+          </div>
+          <div class="grey--text ml-4" v-else>
+            StockId :  {{value.stockId }}
+          </div>
+          <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
+            <v-text-field type="number" label="OrderId" v-model="value.orderId"/>
           </div>
           <div class="grey--text ml-4" v-else>
             OrderId :  {{value.orderId }}
           </div>
-
           <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
-            <v-text-field label="RentId" v-model="value.rentId"/>
+            <v-text-field type="number" label="RentId" v-model="value.rentId"/>
           </div>
           <div class="grey--text ml-4" v-else>
             RentId :  {{value.rentId }}
           </div>
-
+          <div class="grey--text ml-4" v-if="editMode" style = "margin-top:-20px;">
+            <v-text-field type="number" label="StockAmt" v-model="value.stockAmt"/>
+          </div>
+          <div class="grey--text ml-4" v-else>
+            StockAmt :  {{value.stockAmt }}
+          </div>
 
     </v-card-text>
 
