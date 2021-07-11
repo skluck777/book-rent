@@ -3,6 +3,9 @@ package sharedmobility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import sharedmobility.external.PaymentInfo;
+import sharedmobility.external.PaymentInfoService;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,9 +28,11 @@ public class OrderInfoController {
         SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
         String today =  sdf.format(timestamp);
         
-        Long customerId = Long.parseLong(param.get("customerId"));  // API 호출 시 필수 입력 값
+        Long orderId = Long.parseLong(param.get("orderId"));                                // API 호출 시 필수 입력 값
+        Long customerId = Long.parseLong(param.get("customerId"));                          // API 호출 시 필수 입력 값
         Long time = Long.parseLong(param.get("time") == null ? "1" : param.get("time"));    // time은 옵션 값임 줘도되고 안줘도되고
 
+        orderinfo.setOrderId(orderId);          // OrderId 입력
         orderinfo.setOrderDate(today);          // 주문 시간 입력
         orderinfo.setOrderStatus("USE");        // 주문 상태 변경
         orderinfo.setCustomerId(customerId);    // 고객ID 입력
@@ -39,6 +44,15 @@ public class OrderInfoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        // 결제 진행
+        PaymentInfo paymentInfo = new PaymentInfo();
+        paymentInfo.setOrderId(orderId);
+        paymentInfo.setPrice(time*1000);
+        paymentInfo.setCustomerId(customerId);
+
+        OrderApplication.applicationContext.getBean(PaymentInfoService.class)
+            .pay(paymentInfo);
 
         return orderinfo;
     }

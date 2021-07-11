@@ -38,19 +38,57 @@ order 디렉토리 밑 PaymetInfoService.java 파일에서 12번째줄 변경
 
 [사용]
 1. 사용 신청
-http POST localhost:8088/order customerId=99 
-http POST localhost:8088/order customerId=99 time=3 
+http POST localhost:8088/order customerId=99 orderId=1 time=3 
 >> 시간*1000원 가격, default time = 0
 
 2. 사용 신청 내역 확인
-http localhost:8088/order/1	 >> USE 상태 확인
-http localhost:8088/payment/1  >> PAID 상태 확인
-http localhost:8088/rent/1  >> APPROVE 상태 확인
+http localhost:8088/order/1	 # USE 상태 확인
+http localhost:8088/payment/1  # PAID 상태 확인
+http localhost:8088/rent/1  # APPROVE 상태 확인
 
 3. 렌트 신청
 http PUT localhost:8088/rent/1
 
 4. 렌트 상태 확인
-http localhost:8088/rent >> RENT 상태 확인
+http localhost:8088/rent/1 # RENT 상태 확인
 
 5. 렌트 후 차감 확인
+
+[사용 취소]
+1. 사용 신청
+http POST localhost:8088/order customerId=99 orderId=3
+2. 사용 취소
+http PUT localhost:8088/order/cancel/3    
+# 주문 취소 확인
+http localhost:8088/order/3
+# 결제 취소 확인
+http localhost:8088/payment
+
+[반납]
+1. 사용 신청
+http POST localhost:8088/order customerId=99  orderId=4
+2. 렌트 신청
+http PUT localhost:8088/rent/4 
+3. 반납 신청
+http PUT localhost:8088/order/return/4 
+
+http localhost:8088/order/4
+http localhost:8088/rent/4
+
+-----------------------------------------------------------
+
+# 렌트승인 서비스 (Rent) 를 잠시 내려놓음
+
+#사용신청 처리
+http POST localhost:8088/order customerId=11 time=3 orderId=7  #Success
+
+#사용신청 완료상태 까지 Event 진행확인
+http localhost:8088/order/7
+
+#렌트승인 서비스 기동
+cd rent
+mvn spring-boot:run
+
+#렌트 상태 Update 확인
+http localhost:8088/rent/7
+콘솔창에서 확인

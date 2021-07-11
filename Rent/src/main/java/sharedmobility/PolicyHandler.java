@@ -4,6 +4,7 @@ import sharedmobility.config.kafka.KafkaProcessor;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,14 +39,20 @@ public class PolicyHandler{
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverReturned_Return(@Payload Returned returned){
+    public void wheneverReturned_Return(@Payload OrderReturned orderReturned){
 
-        if(!returned.validate()) return;
+        if(!orderReturned.validate()) return;
 
-        System.out.println("\n\n##### listener Return : " + returned.toJson() + "\n\n");
+        System.out.println("\n\n##### listener Return : " + orderReturned.toJson() + "\n\n");
 
         // 반납 수신 시, 반납 상태로 변경
-        RentInfo rentInfo = rentInfoRepository.findById(returned.getOrderId()).get();
+        RentInfo rentInfo = new RentInfo();
+        List<RentInfo> rentList = rentInfoRepository.findByOrderId(orderReturned.getOrderId());
+
+        for (RentInfo o : rentList) {
+            rentInfo = o;
+        }
+
         if(rentInfo != null && !"RETURN".equals(rentInfo.getRentStatus())){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");

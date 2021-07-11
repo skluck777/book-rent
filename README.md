@@ -215,7 +215,7 @@
   mvn spring-boot:run
 ```
 
-# 게이트웨이 적용
+## 게이트웨이 적용
 ```
 spring:
   profiles: default
@@ -254,7 +254,7 @@ spring:
             allowCredentials: true
 ```
 
-# DDD 의 적용
+## DDD 의 적용
 
 - 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. 
 ``` C
@@ -388,8 +388,8 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   ```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
-# 동기식 호출 과 Fallback 처리
-분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
+## 동기식 호출 과 Fallback 처리
+- 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다.
 
 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 (로컬 주소는 변경 필요)
@@ -431,25 +431,27 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
       }
   }
 ```
-동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
+- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
 ```
   # 결제(paymentSystem) 서비스를 잠시 내려놓음
 
   # 사용 신청 처리
-  http POST localhost:8088/order customerId=11 time=3  # Fail
-  http POST localhost:8088/order customerId=22 time=3  # Fail 
-
+  http POST localhost:8088/order customerId=11 time=3 orderId=20  # Fail
+```
+![12](https://user-images.githubusercontent.com/30138356/125189944-aa3b5c00-e275-11eb-81c2-514085209b99.PNG)
+```
   # 결제서비스 재기동
   cd payment
   mvn spring-boot:run
 
   # 사용 신청 처리
-  http POST localhost:8088/order customerId=11 time=3   #Success
-  http POST localhost:8088/order customerId=22 time=3   #Success
+  http POST localhost:8088/order customerId=11 time=3 orderId=20  #Success
 ```
+![13](https://user-images.githubusercontent.com/30138356/125189975-cfc86580-e275-11eb-9b0c-dec97c2ede61.PNG)
+
 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. 
 
-# 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
+## 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
 결제가 이루어진 후에 렌트승인 시스템으로 이를 알려주는 행위는 동기식이 아니라 비동기식으로 처리하여 대여를 위하여 결제가 블로킹 되지 않도록 처리한다.
 
 이를 위하여 결제시스템에 기록을 남긴 후에 곧바로 결제완료이 되었다는 도메인 이벤트를 카프카로 송출한다(Publish)
@@ -493,21 +495,21 @@ public class PolicyHandler{
 렌트승인 시스템은 사용신청/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 렌트승인이 유지보수로 인해 잠시 내려간 상태라도 사용신청을 받는데 문제가 없다:
 ```
 # 렌트승인 서비스 (lectureSystem) 를 잠시 내려놓음
-
-#사용신청 처리
-http POST localhost:8088/order customerId=11 time=3   #Success
-http POST localhost:8088/order customerId=22 time=3   #Success
-
-#사용신청 완료상태 까지 Event 진행확인
-
-#렌트승인 서비스 기동
+# 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
+```
+![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
+![10](https://user-images.githubusercontent.com/30138356/125189710-6e53c700-e274-11eb-9cdf-8c1c66830a35.PNG)
+```
+# 렌트승인 서비스 기동
 cd rent
 mvn spring-boot:run
 
-#렌트 상태 Update 확인
-콘솔창에서 확인
+# 렌트 상태 Update 확인
 ```
+![11](https://user-images.githubusercontent.com/30138356/125189746-9fcc9280-e274-11eb-8ede-260754fa66d9.PNG)
 
+
+## CQRS
 
 - CQRS: Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하도록 구현한다
 
@@ -518,7 +520,7 @@ dashboard의 어트리뷰트는 다음과 같으며
 
 ordered, paymentApproved, canceled, returned, paymentCanceled 이벤트에 따라 주문상태, 반납상태, 취소상태를 업데이트 하는 모델링을 진행하였다.
 
-자동생성된 소스 샘프은 아래와 같다
+자동생성된 소스 샘플은 아래와 같다
 Dashboard.java
 ```
 package sharedmobility;

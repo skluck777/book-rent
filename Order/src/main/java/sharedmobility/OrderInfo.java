@@ -14,9 +14,7 @@ import sharedmobility.external.PaymentInfoService;
 public class OrderInfo {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long orderId;
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long customerId;
     private String orderStatus;
     private String orderDate;
@@ -37,15 +35,6 @@ public class OrderInfo {
             Ordered ordered = new Ordered();
             BeanUtils.copyProperties(this, ordered);
             ordered.publish();   // ordered 카프카 송출
-
-            // 결제 진행
-            PaymentInfo paymentInfo = new PaymentInfo();
-            paymentInfo.setOrderId(this.orderId);
-            paymentInfo.setPrice(this.price);
-            paymentInfo.setCustomerId(this.customerId);
-
-            OrderApplication.applicationContext.getBean(PaymentInfoService.class)
-                .pay(paymentInfo);
         }
     }
 
