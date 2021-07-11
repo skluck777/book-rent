@@ -357,20 +357,29 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
 # orderInfo 서비스의 킥보드 사용 신청(주문)
   http POST localhost:8088/order customerId=99 time=3 
+  ![6](https://user-images.githubusercontent.com/30138356/125185538-6722be00-e260-11eb-8954-df445ed838d8.PNG)
+
+  ![1](https://user-images.githubusercontent.com/30138356/125185493-10b57f80-e260-11eb-8e4c-aadfd27cbe06.png)
 
 # 주문 상태 확인
   http localhost:8088/order/1	   # USE 상태 확인
+  ![2](https://user-images.githubusercontent.com/30138356/125185550-773a9d80-e260-11eb-85e8-862eb1564e69.PNG)
   http localhost:8088/payment/1  # AID 상태 확인
+  ![3](https://user-images.githubusercontent.com/30138356/125185554-7dc91500-e260-11eb-93e5-f2e0ab3228c4.PNG)
   http localhost:8088/rent/1     # APPROVE 상태 확인
+  ![4](https://user-images.githubusercontent.com/30138356/125185555-80c40580-e260-11eb-8bd8-2d2cd30febc9.PNG)
 
 # 렌트 신청
   http PUT localhost:8088/rent/1
+![7](https://user-images.githubusercontent.com/30138356/125185590-aea94a00-e260-11eb-8507-9dea1bb736be.PNG)
 
 # 렌트 상태 확인
   http localhost:8088/rent         # RENT 상태 확인
+![5](https://user-images.githubusercontent.com/30138356/125185575-946f6c00-e260-11eb-952d-b893fcb05bcf.PNG)
 
 # 렌트 후 차감 확인
   콘솔에서 확인
+  ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 ```
 # 동기식 호출 과 Fallback 처리
 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 

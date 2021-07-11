@@ -21,10 +21,20 @@ order 디렉토리 밑 PaymetInfoService.java 파일에서 12번째줄 변경
    - 변경 전 : @FeignClient(name="Payment", url="payment:8080")
    - 변경 후 : @FeignClient(name="Payment", url="http://localhost:8083")
 
-order 디렉토리에서 pom.xml 파일 존재하는 위치에서 mvn spring-boot:run
+  cd order
+  mvn spring-boot:run
 
-7. payment 실행
-payment 디렉토리에서 pom.xml 파일 존재하는 위치에서 mvn spring-boot:run
+  cd payment
+  mvn spring-boot:run 
+
+  cd rent
+  mvn spring-boot:run  
+
+  cd stock
+  mvn spring-boot:run 
+
+  cd gateway
+  mvn spring-boot:run
 
 [사용]
 1. 사용 신청

@@ -50,15 +50,15 @@ spring:
         - id: Order
           uri: http://Order:8080
           predicates:
-            - Path=/orderInfos/** 
+            - Path=/order/** 
         - id: Stock
           uri: http://Stock:8080
           predicates:
-            - Path=/stockInfos/** 
+            - Path=/stock/** 
         - id: Payment
           uri: http://Payment:8080
           predicates:
-            - Path=/paymentInfos/** 
+            - Path=/payment/** 
         - id: Dashboard
           uri: http://Dashboard:8080
           predicates:
@@ -66,7 +66,7 @@ spring:
         - id: Rent
           uri: http://Rent:8080
           predicates:
-            - Path=/rentInfos/** 
+            - Path=/rent/** 
       globalcors:
         corsConfigurations:
           '[/**]':
