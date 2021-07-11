@@ -32,6 +32,13 @@ public class OrderInfo {
 
         // 사용 주문 들어왔을 경우
         if("USE".equals(this.orderStatus)){
+            /*
+                Kafka 송출
+            */
+            Ordered ordered = new Ordered();
+            BeanUtils.copyProperties(this, ordered);
+            ordered.publish();   // ordered 카프카 송출
+
             // 결제 진행
             PaymentInfo paymentInfo = new PaymentInfo();
             paymentInfo.setOrderId(this.orderId);
@@ -40,13 +47,6 @@ public class OrderInfo {
 
             OrderApplication.applicationContext.getBean(PaymentInfoService.class)
                 .pay(paymentInfo);
-
-            /*
-                Kafka 송출
-            */
-            Ordered ordered = new Ordered();
-            BeanUtils.copyProperties(this, ordered);
-            ordered.publishAfterCommit();   // ordered 카프카 송출
         }
     }
 
