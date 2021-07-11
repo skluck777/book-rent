@@ -1,13 +1,13 @@
 package sharedmobility;
 
-public class Returned extends AbstractEvent {
+public class OrderReturned extends AbstractEvent {
 
     private Long orderId;
     private String returnDate;
     private Long customerId;
     private String orderStatus;
 
-    public Returned(){
+    public OrderReturned(){
         super();
     }
 

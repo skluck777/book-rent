@@ -24,7 +24,6 @@ public class OrderInfo {
     private String returnDate;
     private Long time;
     private Long price;
-    private Long stockAmt = Long.valueOf("10");
 
     // 해당 엔티티 저장 후
     @PostPersist
@@ -60,7 +59,7 @@ public class OrderInfo {
             canceled.publishAfterCommit();
         }else if("RETURN".equals(this.orderStatus)){
             // 주문 상태가 returned 일 때
-            Returned returned = new Returned();
+            OrderReturned returned = new OrderReturned();
             BeanUtils.copyProperties(this, returned);
             returned.publishAfterCommit();
         }
@@ -123,12 +122,5 @@ public class OrderInfo {
 
     public void setPrice(Long price) {
         this.price = price;
-    }
-    public Long getStockAmt() {
-        return stockAmt;
-    }
-
-    public void setStockAmt(Long stockAmt) {
-        this.stockAmt = stockAmt;
-    }    
+    } 
 }

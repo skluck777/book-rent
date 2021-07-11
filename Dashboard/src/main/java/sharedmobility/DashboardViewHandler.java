@@ -26,13 +26,13 @@ public class DashboardViewHandler {
             // view 객체 생성
             Dashboard dashboard = new Dashboard();
             // view 객체에 이벤트의 Value 를 set 함
-            dashboard.setOrderId(ordered.getId());
+            dashboard.setOrderId(ordered.getOrderId());
             dashboard.setOrderStatus(ordered.getOrderStatus());
             dashboard.setCustomerId(ordered.getCustomerId());
-            dashboard.setId( dashboard.getId()  +  1);
             dashboard.setOrderDate(ordered.getOrderDate());
             // view 레파지 토리에 save
             dashboardRepository.save(dashboard);
+
 
         }catch (Exception e){
             e.printStackTrace();
@@ -45,7 +45,6 @@ public class DashboardViewHandler {
         try {
             if (!paymentApproved.validate()) return;
                 // view 객체 조회
-
                     List<Dashboard> dashboardList = dashboardRepository.findByOrderId(paymentApproved.getOrderId());
                     for(Dashboard dashboard : dashboardList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
@@ -67,7 +66,7 @@ public class DashboardViewHandler {
             if (!canceled.validate()) return;
                 // view 객체 조회
 
-                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(canceled.getId());
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(canceled.getOrderId());
                     for(Dashboard dashboard : dashboardList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     dashboard.setOrderStatus(canceled.getOrderStatus());
@@ -86,7 +85,7 @@ public class DashboardViewHandler {
             if (!returned.validate()) return;
                 // view 객체 조회
 
-                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(returned.getId());
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(returned.getOrderId());
                     for(Dashboard dashboard : dashboardList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     dashboard.setOrderStatus(returned.getOrderStatus());
@@ -120,4 +119,3 @@ public class DashboardViewHandler {
     }
 
 }
-

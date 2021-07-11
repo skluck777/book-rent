@@ -8,8 +8,4 @@ import java.util.List;
 public interface DashboardRepository extends CrudRepository<Dashboard, Long> {
 
     List<Dashboard> findByOrderId(Long orderId);
-    List<Dashboard> findByOrderId(Long orderId);
-    List<Dashboard> findByOrderId(Long orderId);
-    List<Dashboard> findByOrderId(Long orderId);
-
 }
