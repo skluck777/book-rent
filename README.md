@@ -508,12 +508,285 @@ mvn spring-boot:run
 콘솔창에서 확인
 ```
 
+
 - CQRS: Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하도록 구현한다
 
-dashboard
-```
+주문 / 결제 / 렌트 서비스의 전체 현황 및 상태 조회를 제공하기 위해 dashboard를 구성하였다.
 
+dashboard의 어트리뷰트는 다음과 같으며
+![image](https://user-images.githubusercontent.com/22028798/125186287-79066000-e264-11eb-94a6-ee4a85aa8851.png)
+
+ordered, paymentApproved, canceled, returned, paymentCanceled 이벤트에 따라 주문상태, 반납상태, 취소상태를 업데이트 하는 모델링을 진행하였다.
+
+자동생성된 소스 샘프은 아래와 같다
+Dashboard.java
 ```
+package sharedmobility;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name="Dashboard_table")
+public class Dashboard {
+
+        @Id
+        @GeneratedValue(strategy=GenerationType.AUTO)
+        private Long dashboardId;
+        private Long customerId;
+        private Long orderId;
+        private Long paymentId;
+        private Long rentId;
+        private String payStatus;
+        private String orderStatus;
+        private String orderDate;
+        private String cancelDate;
+        private String returnDate;
+        private String payDate;
+        private Long price;
+        private String payCancelDate;
+
+
+        public Long getDashboardId() {
+            return dashboardId;
+        }
+
+        public void setDashboardId(Long dashboardId) {
+            this.dashboardId = dashboardId;
+        }
+        public Long getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(Long customerId) {
+            this.customerId = customerId;
+        }
+        public Long getOrderId() {
+            return orderId;
+        }
+
+        public void setOrderId(Long orderId) {
+            this.orderId = orderId;
+        }
+        public Long getPaymentId() {
+            return paymentId;
+        }
+
+        public void setPaymentId(Long paymentId) {
+            this.paymentId = paymentId;
+        }
+        public Long getRentId() {
+            return rentId;
+        }
+
+        public void setRentId(Long rentId) {
+            this.rentId = rentId;
+        }
+        public String getPayStatus() {
+            return payStatus;
+        }
+
+        public void setPayStatus(String payStatus) {
+            this.payStatus = payStatus;
+        }
+        public String getOrderStatus() {
+            return orderStatus;
+        }
+
+        public void setOrderStatus(String orderStatus) {
+            this.orderStatus = orderStatus;
+        }
+        public String getOrderDate() {
+            return orderDate;
+        }
+
+        public void setOrderDate(String orderDate) {
+            this.orderDate = orderDate;
+        }
+        public String getCancelDate() {
+            return cancelDate;
+        }
+
+        public void setCancelDate(String cancelDate) {
+            this.cancelDate = cancelDate;
+        }
+        public String getReturnDate() {
+            return returnDate;
+        }
+
+        public void setReturnDate(String returnDate) {
+            this.returnDate = returnDate;
+        }
+        public String getPayDate() {
+            return payDate;
+        }
+
+        public void setPayDate(String payDate) {
+            this.payDate = payDate;
+        }
+        public Long getPrice() {
+            return price;
+        }
+
+        public void setPrice(Long price) {
+            this.price = price;
+        }
+        public String getPayCancelDate() {
+            return payCancelDate;
+        }
+
+        public void setPayCancelDate(String payCancelDate) {
+            this.payCancelDate = payCancelDate;
+        }
+
+}
+```
+DashboardRepository.java
+```
+package sharedmobility;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface DashboardRepository extends CrudRepository<Dashboard, Long> {
+
+    List<Dashboard> findByOrderId(Long orderId);
+
+}
+```
+DashboardViewHandler.java
+```
+package sharedmobility;
+
+import sharedmobility.config.kafka.KafkaProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class DashboardViewHandler {
+
+
+    @Autowired
+    private DashboardRepository dashboardRepository;
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenOrdered_then_CREATE_1 (@Payload Ordered ordered) {
+        try {
+
+            if (!ordered.validate()) return;
+
+            // view 객체 생성
+            Dashboard dashboard = new Dashboard();
+            // view 객체에 이벤트의 Value 를 set 함
+            dashboard.setOrderId(ordered.getOrderId());
+            dashboard.setOrderStatus(ordered.getOrderStatus());
+            dashboard.setCustomerId(ordered.getCustomerId());
+            dashboard.setOrderDate(ordered.getOrderDate());
+            // view 레파지 토리에 save
+            dashboardRepository.save(dashboard);
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenPaymentApproved_then_UPDATE_1(@Payload PaymentApproved paymentApproved) {
+        try {
+            if (!paymentApproved.validate()) return;
+                // view 객체 조회
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(paymentApproved.getOrderId());
+                    for(Dashboard dashboard : dashboardList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    dashboard.setPaymentId(paymentApproved.getPayId());
+                    dashboard.setPayDate(paymentApproved.getPayDate());
+                    dashboard.setPayStatus(paymentApproved.getPayStatus());
+                    dashboard.setPrice(paymentApproved.getPrice());
+                // view 레파지 토리에 save
+                dashboardRepository.save(dashboard);
+                }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenCanceled_then_UPDATE_2(@Payload Canceled canceled) {
+        try {
+            if (!canceled.validate()) return;
+                // view 객체 조회
+
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(canceled.getOrderId());
+                    for(Dashboard dashboard : dashboardList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    dashboard.setOrderStatus(canceled.getOrderStatus());
+                    dashboard.setCancelDate(canceled.getCancelDate());
+                // view 레파지 토리에 save
+                dashboardRepository.save(dashboard);
+                }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenReturned_then_UPDATE_3(@Payload Returned returned) {
+        try {
+            if (!returned.validate()) return;
+                // view 객체 조회
+
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(returned.getOrderId());
+                    for(Dashboard dashboard : dashboardList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    dashboard.setOrderStatus(returned.getOrderStatus());
+                    dashboard.setReturnDate(returned.getReturnDate());
+                // view 레파지 토리에 save
+                dashboardRepository.save(dashboard);
+                }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenPaymentCanceled_then_UPDATE_4(@Payload PaymentCanceled paymentCanceled) {
+        try {
+            if (!paymentCanceled.validate()) return;
+                // view 객체 조회
+
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(paymentCanceled.getOrderId());
+                    for(Dashboard dashboard : dashboardList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    dashboard.setPayStatus(paymentCanceled.getPayStatus());
+                    dashboard.setPayCancelDate(paymentCanceled.getPayCancelDate());
+                // view 레파지 토리에 save
+                dashboardRepository.save(dashboard);
+                }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+}
+```
+CQRS에 대한 테스트는 아래와 같다
+주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
+![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
+
+dashbaord CQRS 결과는 아래와 같다
+![image](https://user-images.githubusercontent.com/22028798/125186621-5d03be00-e266-11eb-85a6-58cede9ce417.png)
+
 
 # 운영
 
