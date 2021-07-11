@@ -118,4 +118,25 @@ public class DashboardViewHandler {
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenRented_then_UPDATE_5(@Payload Rented Rented) {
+        try {
+            if (!Rented.validate()) return;
+                // view 객체 조회
+
+                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(Rented.getOrderId());
+                    for(Dashboard dashboard : dashboardList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    dashboard.setRentId(Rented.getRentId());
+                    dashboard.setRentStatus(Rented.getRentStatus());
+                    dashboard.setRentDate(Rented.getRentDate());
+                // view 레파지 토리에 save
+                dashboardRepository.save(dashboard);
+                }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
