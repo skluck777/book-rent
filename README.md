@@ -508,6 +508,13 @@ mvn spring-boot:run
 콘솔창에서 확인
 ```
 
+- CQRS: Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하도록 구현한다
+
+dashboard
+```
+
+```
+
 # 운영
 
 
