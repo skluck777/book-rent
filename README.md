@@ -197,6 +197,288 @@
 
 # 구현
 
+- 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현하였다. 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
+```
+  cd order
+  mvn spring-boot:run
+
+  cd payment
+  mvn spring-boot:run 
+
+  cd rent
+  mvn spring-boot:run  
+
+  cd stock
+  mvn spring-boot:run 
+
+  cd gateway
+  mvn spring-boot:run
+```
+
+# 게이트웨이 적용
+```
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: Order
+          uri: http://localhost:8081
+          predicates:
+            - Path=/order/** 
+        - id: Stock
+          uri: http://localhost:8082
+          predicates:
+            - Path=/stock/** 
+        - id: Payment
+          uri: http://localhost:8083
+          predicates:
+            - Path=/payment/** 
+        - id: Dashboard
+          uri: http://localhost:8084
+          predicates:
+            - Path= /dashboards/**
+        - id: Rent
+          uri: http://localhost:8085
+          predicates:
+            - Path=/rent/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+```
+
+# DDD 의 적용
+
+- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. 
+``` C
+  package sharedmobility;
+
+  import javax.persistence.*;
+  import org.springframework.beans.BeanUtils;
+
+  @Entity
+  @Table(name="PaymentInfo_table")
+  public class PaymentInfo {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long payId;
+    private Long orderId;
+    private Long price;
+    private String payDate;
+    private String payStatus;
+    private String payCancelDate;
+    private Long customerId;
+
+    @PostPersist
+    public void onPostPersist(){
+        // 결제 완료 후 KAFKA 전송
+        if(this.payStatus == "PAIED"){
+            PaymentApproved paymentApproved = new PaymentApproved();
+            BeanUtils.copyProperties(this, paymentApproved);
+            paymentApproved.publishAfterCommit();
+        }
+
+    }
+    @PostUpdate
+    public void onPostUpdate(){
+        if(this.payStatus == "CANCEL"){
+        PaymentCanceled paymentCanceled = new PaymentCanceled();
+        BeanUtils.copyProperties(this, paymentCanceled);
+        paymentCanceled.publishAfterCommit();
+        }
+    }
+
+    public Long getPayId() {
+        return payId;
+    }
+    public void setPayId(Long payId) {
+        this.payId = payId;
+    }
+    public Long getOrderId() {
+        return orderId;
+    }
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+    public Long getPrice() {
+        return price;
+    }
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+    public String getPayDate() {
+        return payDate;
+    }
+    public void setPayDate(String payDate) {
+        this.payDate = payDate;
+    }
+    public String getPayStatus() {
+        return payStatus;
+    }
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
+    }
+    public String getPayCancelDate() {
+        return payCancelDate;
+    }
+    public void setPayCancelDate(String payCancelDate) {
+        this.payCancelDate = payCancelDate;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+  }
+```
+- 적용 후 REST API 의 테스트
+```
+# orderInfo 서비스의 킥보드 사용 신청(주문)
+  http POST localhost:8088/order customerId=99 time=3 
+
+# 주문 상태 확인
+  http localhost:8088/order/1	   # USE 상태 확인
+  http localhost:8088/payment/1  # AID 상태 확인
+  http localhost:8088/rent/1     # APPROVE 상태 확인
+
+# 렌트 신청
+  http PUT localhost:8088/rent/1
+
+# 렌트 상태 확인
+  http localhost:8088/rent         # RENT 상태 확인
+
+# 렌트 후 차감 확인
+  콘솔에서 확인
+```
+# 동기식 호출 과 Fallback 처리
+분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
+호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다.
+
+결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 (로컬 주소는 변경 필요)
+``` C
+# (orderInfo) PaymentInfoService.java
+
+  @FeignClient(name="Payment", url="http://localhost:8083")
+  public interface PaymentInfoService {
+      @RequestMapping(method= RequestMethod.POST, path="/payment")
+      public void pay(@RequestBody PaymentInfo paymentInfo);
+
+  }
+```
+- 사용신청 직후(@PostPersist) 결제를 요청하도록 처리
+```
+# OrderInfo.java (Entity)
+
+  // 해당 엔티티 저장 후
+  @PostPersist
+  public void onPostPersist(){
+
+      // 사용 주문 들어왔을 경우
+      if("USE".equals(this.orderStatus)){
+          // 결제 진행
+          PaymentInfo paymentInfo = new PaymentInfo();
+          paymentInfo.setOrderId(this.orderId);
+          paymentInfo.setPrice(this.price);
+          paymentInfo.setCustomerId(this.customerId);
+
+          OrderApplication.applicationContext.getBean(PaymentInfoService.class)
+              .pay(paymentInfo);
+
+          /*
+              Kafka 송출
+          */
+          Ordered ordered = new Ordered();
+          BeanUtils.copyProperties(this, ordered);
+          ordered.publishAfterCommit();   // ordered 카프카 송출
+      }
+  }
+```
+동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
+```
+  # 결제(paymentSystem) 서비스를 잠시 내려놓음
+
+  # 사용 신청 처리
+  http POST localhost:8088/order customerId=11 time=3  # Fail
+  http POST localhost:8088/order customerId=22 time=3  # Fail 
+
+  # 결제서비스 재기동
+  cd payment
+  mvn spring-boot:run
+
+  # 사용 신청 처리
+  http POST localhost:8088/order customerId=11 time=3   #Success
+  http POST localhost:8088/order customerId=22 time=3   #Success
+```
+또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. 
+
+# 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
+결제가 이루어진 후에 수강신청시스템으로 이를 알려주는 행위는 동기식이 아니라 비 동기식으로 처리하여 수강신청 완료처리를 위하여 결제가 블로킹 되지 않도록 처리한다.
+
+이를 위하여 결제시스템에 기록을 남긴 후에 곧바로 결제완료이 되었다는 도메인 이벤트를 카프카로 송출한다(Publish)
+``` C
+  ...
+    @PostPersist
+    public void onPostPersist(){
+        // 결제 완료 후 KAFKA 전송
+        if(this.payStatus == "PAIED"){
+            PaymentApproved paymentApproved = new PaymentApproved();
+            BeanUtils.copyProperties(this, paymentApproved);
+            paymentApproved.publishAfterCommit();
+        }
+
+    }
+```
+렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
+``` C
+public class PolicyHandler{
+ ...
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPaymentApproved_Approve(@Payload PaymentApproved paymentApproved){
+        // 유휴 킥보드에 접근하여 해당 Order ID 의 렌트승인 상태로 변경
+        // 렌트 승인 상태인 Order Id 는 기기 접근 시 승인 처리됨.
+        if(!paymentApproved.validate()) return;
+
+        System.out.println("\n\n##### listener Approve : " + paymentApproved.toJson() + "\n\n");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+        String today =  sdf.format(timestamp);
+
+        // 결제 승인 시, 렌트 가능한 상태로 변경
+        RentInfo rentInfo = new RentInfo(); // 신규 생성
+        rentInfo.setOrderId(paymentApproved.getOrderId());  // orderId 저장
+        rentInfo.setRentStatus("APPROVE");  // 렌트 상태 저장
+        rentInfo.setApproveDate(today);  // 승인 날짜
+
+        rentInfoRepository.save(rentInfo);
+    }
+```
+렌트승인 시스템은 사용신청/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 렌트승인이 유지보수로 인해 잠시 내려간 상태라도 사용신청을 받는데 문제가 없다:
+```
+# 렌트승인 서비스 (lectureSystem) 를 잠시 내려놓음
+
+#사용신청 처리
+http POST localhost:8088/order customerId=11 time=3   #Success
+http POST localhost:8088/order customerId=22 time=3   #Success
+
+#사용신청 완료상태 까지 Event 진행확인
+
+#렌트승인 서비스 기동
+cd rent
+mvn spring-boot:run
+
+#렌트 상태 Update 확인
+콘솔창에서 확인
+```
 
 # 운영
 
