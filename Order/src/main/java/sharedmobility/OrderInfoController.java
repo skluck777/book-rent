@@ -25,17 +25,14 @@ public class OrderInfoController {
         SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
         String today =  sdf.format(timestamp);
         
-        Long customerId = Long.parseLong(param.get("customerId"));
-        Long time = Long.parseLong(param.get("time") == null ? "1" : param.get("time"));
+        Long customerId = Long.parseLong(param.get("customerId"));  // API 호출 시 필수 입력 값
+        Long time = Long.parseLong(param.get("time") == null ? "1" : param.get("time"));    // time은 옵션 값임 줘도되고 안줘도되고
 
-        orderinfo.setOrderDate(today);
-        orderinfo.setOrderStatus("USE");
-        orderinfo.setCustomerId(customerId);
-        orderinfo.setTime(time);
-        orderinfo.setPrice(time*1000);   // 시간 당 천원
-
-        // TODO : 렌트 가능한 지 확인 필요
-        System.out.println("Stock 호출해서 잔여 재고가 있는 지 확인 필요");
+        orderinfo.setOrderDate(today);          // 주문 시간 입력
+        orderinfo.setOrderStatus("USE");        // 주문 상태 변경
+        orderinfo.setCustomerId(customerId);    // 고객ID 입력
+        orderinfo.setTime(time);                // 이용 시간 입력
+        orderinfo.setPrice(time*1000);          // 시간 당 천원 입력
 
         try {
             orderinfo = orderInfoRepository.save(orderinfo);
@@ -47,13 +44,13 @@ public class OrderInfoController {
     }
 
     // 주문 취소
-    @PatchMapping(value = "/order/cancel/{id}")
+    @PutMapping(value = "/order/cancel/{id}")
     public OrderInfo cancelOrder(@PathVariable String id) {
         return this.updateOrder(id, "CANCEL");
     }
 
     // 반납 주문
-    @PatchMapping(value = "/order/return/{id}")
+    @PutMapping(value = "/order/return/{id}")
     public OrderInfo returnOrder(@PathVariable String id) {
         return this.updateOrder(id, "RETURN");
     }
@@ -62,15 +59,20 @@ public class OrderInfoController {
     @PatchMapping(value = "/order/update/{id}")
     public OrderInfo updateOrder(@PathVariable String id, @PathVariable String status) {
         OrderInfo orderInfo = null;
+        boolean isFind = false;
+
         List<OrderInfo> paymentList = orderInfoRepository.findByOrderId(Long.parseLong(id));
 
         for (OrderInfo o : paymentList) {
-            o.setOrderStatus(status);
+            if("USE".equals(o.getOrderStatus())){
+                o.setOrderStatus(status);
 
-            orderInfo = orderInfoRepository.save(o);    // 저장
+                orderInfo = orderInfoRepository.save(o);    // 저장
+                isFind = true;
+            }
         }
 
-        return orderInfo;
+        return isFind ? orderInfo : null;
     }
 
     // 주문 확인

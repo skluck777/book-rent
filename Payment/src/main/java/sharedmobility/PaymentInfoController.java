@@ -45,7 +45,7 @@ import java.util.Optional;
    }
    
        // 결제 취소
-       @PatchMapping(value = "/payment/cancel/{id}")
+       @PutMapping(value = "/payment/cancel/{id}")
        public PaymentInfo cancelPayment(@PathVariable String id) {
            return this.updatePayment(id, "CANCEL");
        }

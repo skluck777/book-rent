@@ -44,12 +44,15 @@ public class PolicyHandler{
 
         System.out.println("\n\n##### listener Return : " + returned.toJson() + "\n\n");
 
-        // 반납 시, 반납 상태로 변경
-        // RentInfo rentInfo = new RentInfo();
-        // rentInfo.setOrderId(paymentApproved.getOrderId());  // orderId 저장
-        // rentInfo.setRentStatus("Returned");  // orderId 저장
-        // rentInfoRepository.save(rentInfo);
-
+        // 반납 수신 시, 반납 상태로 변경
+        RentInfo rentInfo = rentInfoRepository.findById(returned.getOrderId()).get();
+        if(rentInfo != null && !"RETURN".equals(rentInfo.getRentStatus())){
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+            rentInfo.setReturnDate(sdf.format(timestamp));
+            rentInfo.setRentStatus("RETURN");
+            rentInfoRepository.save(rentInfo);
+        }
     }
 
     @StreamListener(KafkaProcessor.INPUT)
