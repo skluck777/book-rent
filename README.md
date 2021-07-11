@@ -154,25 +154,25 @@
 
 ### 완성된 1차 모형
 
-![image](https://user-images.githubusercontent.com/31404198/125084361-65dc7e80-e104-11eb-9d2a-5805bf435f39.png)
+![image](https://user-images.githubusercontent.com/31404198/125188470-e4552f80-e26e-11eb-9a3a-c6784c62287b.png)
 
     - View Model 추가
 
 ### 1차 완성본에 대한 기능적/비기능적 요구사항을 커버하는지 검증
 
-![image](https://user-images.githubusercontent.com/31404198/125151159-1a67b600-e180-11eb-930c-3926a9d210cd.png)
+![image](https://user-images.githubusercontent.com/31404198/125188546-267e7100-e26f-11eb-9cd8-674365a4e5ce.png)
 
     - 사용자가 킥보드 선택 후 예약한다. (ok)
     - 예약한 킥보드에 대해서 결제한다. (ok)
     - 결제 후 사용승인이 되면 킥보드를 대여한다. (ok)
     - 킥보드가 대여가 되면 재고가 감소된다. (ok)
 
-![image](https://user-images.githubusercontent.com/31404198/125151183-42efb000-e180-11eb-85c9-e4e4630da31a.png)
+![image](https://user-images.githubusercontent.com/31404198/125188569-35652380-e26f-11eb-9d41-cd6e23a87959.png)
 
     - 사용자가 킥보드 예약을 취소한다. (ok)
     - 예약을 취소하면 결제가 취소된다. (ok)
 
-![image](https://user-images.githubusercontent.com/31404198/125151257-661a5f80-e180-11eb-933b-1eb161319d13.png)
+![image](https://user-images.githubusercontent.com/31404198/125188594-4150e580-e26f-11eb-823f-865320aaf110.png)
 
     - 사용자가 킥보드를 반납한다. (ok)
     - 반납요청이 확인되면 재고가 증가한다. (ok)
@@ -180,7 +180,7 @@
 
 ### 비기능 요구사항에 대한 검증
 
-![image](https://user-images.githubusercontent.com/31404198/125151375-9feb6600-e180-11eb-93a1-5070e3ffbafc.png)
+![image](https://user-images.githubusercontent.com/31404198/125188612-4ca41100-e26f-11eb-8139-2cb390446974.png)
 
     - 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리
     - 고객 예약시 결제처리:  결제가 완료되지 않은 예약은 절대 대여를 할 수 없기 때문에, ACID 트랜잭션 적용. 예약완료시 결제처리에 대해서는 Request-Response 방식 처리
