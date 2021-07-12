@@ -237,9 +237,48 @@ spring:
         - id: Dashboard
           uri: http://localhost:8084
           predicates:
-            - Path= /dashboards/**
+            - Path= /dashboard/**
         - id: Rent
           uri: http://localhost:8085
+          predicates:
+            - Path=/rent/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://order:8080
+          predicates:
+            - Path=/order/** 
+        - id: stock
+          uri: http://stock:8080
+          predicates:
+            - Path=/stock/** 
+        - id: payment
+          uri: http://payment:8080
+          predicates:
+            - Path=/payment/** 
+        - id: dashboard
+          uri: http://dashboard:8080
+          predicates:
+            - Path= /dashboard/**
+        - id: rent
+          uri: http://rent:8080
           predicates:
             - Path=/rent/** 
       globalcors:
