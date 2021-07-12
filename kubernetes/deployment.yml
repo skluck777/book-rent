@@ -338,4 +338,4 @@ kind: ConfigMap
 metadata:
   name: order-configmap
 data:
-  election-url: payment:8080
+  order-url: payment:8080
