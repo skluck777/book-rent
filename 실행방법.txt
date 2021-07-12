@@ -141,3 +141,63 @@ aws ecr create-repository --repository-name user01-final --image-scanning-config
 docker login --username AWS -p $(aws ecr get-login-password --region ap-northeast-2) 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/
 
 # URL : 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-final
+
+Project build error: 'dependencies.dependency.version' for com.h2database:hsqldb:jar is missing
+
+
+1. 운영
+aws configure 
+
+# 아래 세문단 차례로 입력
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: eks-admin
+  namespace: kube-system
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: eks-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: eks-admin
+  namespace: kube-system
+EOF
+
+aws eks --region ap-northeast-2 update-kubeconfig --name user01-eks
+
+kubectl -n kube-system describe secret eks-admin
+
+
+# 각 MSA 모듈 내 buildspec.yml 파일 생성
+# CodeBuild 접속, 프로젝트 빌드 생성
+# 프로젝트 빌드 생성 후 'user01-rent-policy' 정책 생성 필수 (미설정 시, PRE_BUILD 에서 오류 발생)
+IAM
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:CompleteLayerUpload",
+                "ecr:GetAuthorizationToken",
+                "ecr:InitiateLayerUpload",
+                "ecr:PutImage",
+                "ecr:UploadLayerPart"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+
+# 관리콘솔에서 S3 검색 > 버킷 만들기 > pipeline만드는 region이 AWS리전과 같아야 한다 
+# 관리콘솔에서 CodeBuild> 내 파이프라인으로 이동 >빌드 세부 정보> 아티팩트 편집 > 유형 S3, 버킷이름 user22~선택>아티팩트 업데이트
