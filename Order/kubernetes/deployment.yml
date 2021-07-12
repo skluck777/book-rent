@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Order
+  name: order
   labels:
-    app: Order
+    app: order
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Order
+      app: order
   template:
     metadata:
       labels:
-        app: Order
+        app: order
     spec:
       containers:
-        - name: Order
-          image: username/Order:latest
+        - name: order
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
           ports:
             - containerPort: 8080
           readinessProbe:
