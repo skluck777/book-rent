@@ -37,6 +37,9 @@ logging:
     org.springframework.cloud: debug
 server:
   port: 8081
+api: 
+  url: 
+    election: localhost:8083
 ---
 
 spring:
@@ -62,3 +65,6 @@ spring:
         event-out:
           destination: sharedmobility
           contentType: application/json
+api: 
+  url: 
+    election: ${order-url}          

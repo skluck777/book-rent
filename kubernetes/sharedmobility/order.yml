@@ -54,3 +54,15 @@ spec:
       targetPort: 8080
   selector:
     app: order
+
+
+---
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-configmap
+  namespace: omp
+data:
+  election-url: payment:8080

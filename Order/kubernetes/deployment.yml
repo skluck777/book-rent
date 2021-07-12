@@ -19,6 +19,12 @@ spec:
           image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
           ports:
             - containerPort: 8080
+          env:
+            - name: ORDER-URL
+              valueFrom:
+                configMapKeyRef:
+                  name: vote-configmap
+                  key: order-url   
           readinessProbe:
             httpGet:
               path: '/order'
