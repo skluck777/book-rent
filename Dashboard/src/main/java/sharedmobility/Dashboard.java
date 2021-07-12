@@ -22,6 +22,8 @@ public class Dashboard {
         private String payDate;
         private Long price;
         private String payCancelDate;
+        private String rentStatus;
+        private String rentDate;
 
 
         public Long getDashboardId() {
@@ -114,6 +116,22 @@ public class Dashboard {
 
         public void setPayCancelDate(String payCancelDate) {
             this.payCancelDate = payCancelDate;
+        }
+
+        public void setRentStatus(String rentStatus) {
+            this.rentStatus = rentStatus;
+        }
+
+        public String getRentStatus() {
+            return rentStatus;
+        }
+
+        public String getRentDate() {
+            return rentDate;
+        }
+
+        public void setRentDate(String rentDate) {
+            this.rentDate = rentDate;
         }
 
 }
