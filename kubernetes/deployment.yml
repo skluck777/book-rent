@@ -3,22 +3,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Order
+  name: order
   labels:
-    app: Order
+    app: order
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Order
+      app: order
   template:
     metadata:
       labels:
-        app: Order
+        app: order
     spec:
       containers:
-        - name: Order
-          image: username/Order:latest
+        - name: order
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -43,22 +43,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Stock
+  name: stock
   labels:
-    app: Stock
+    app: stock
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Stock
+      app: stock
   template:
     metadata:
       labels:
-        app: Stock
+        app: stock
     spec:
       containers:
-        - name: Stock
-          image: username/Stock:latest
+        - name: stock
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -83,22 +83,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Payment
+  name: payment
   labels:
-    app: Payment
+    app: payment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Payment
+      app: payment
   template:
     metadata:
       labels:
-        app: Payment
+        app: payment
     spec:
       containers:
-        - name: Payment
-          image: username/Payment:latest
+        - name: payment
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -123,22 +123,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Dashboard
+  name: dashboard
   labels:
-    app: Dashboard
+    app: dashboard
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Dashboard
+      app: dashboard
   template:
     metadata:
       labels:
-        app: Dashboard
+        app: dashboard
     spec:
       containers:
-        - name: Dashboard
-          image: username/Dashboard:latest
+        - name: dashboard
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -163,22 +163,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Rent
+  name: rent
   labels:
-    app: Rent
+    app: rent
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Rent
+      app: rent
   template:
     metadata:
       labels:
-        app: Rent
+        app: rent
     spec:
       containers:
-        - name: Rent
-          image: username/Rent:latest
+        - name: rent
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -202,18 +202,30 @@ spec:
 ---
 
 
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: Order
+  name: gateway
+  namespace: myhotel
   labels:
-    app: Order
+    app: gateway
 spec:
-  ports:
-    - port: 8080
-      targetPort: 8080
+  replicas: 1
   selector:
-    app: Order
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
 
 
 ---
@@ -222,15 +234,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: Stock
+  name: order
   labels:
-    app: Stock
+    app: order
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: Stock
+    app: order
 
 
 ---
@@ -239,15 +251,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: Payment
+  name: stock
   labels:
-    app: Payment
+    app: stock
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: Payment
+    app: stock
 
 
 ---
@@ -256,15 +268,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: Dashboard
+  name: payment
   labels:
-    app: Dashboard
+    app: payment
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: Dashboard
+    app: payment
 
 
 ---
@@ -273,13 +285,47 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: Rent
+  name: dashboard
   labels:
-    app: Rent
+    app: dashboard
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: Rent
+    app: dashboard
 
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rent
+  labels:
+    app: rent
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: rent
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: gateway
+  type: LoadBalancer
