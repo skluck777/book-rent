@@ -19,7 +19,7 @@ public class RentInfo {
     private String rentStatus;
 
     @PostUpdate
-    public void onPostUpdate(){
+    public void onPostUpdate(){ 
         if(this.rentStatus.equals("RETURN")){
             Returned returned = new Returned();
             BeanUtils.copyProperties(this, returned);
