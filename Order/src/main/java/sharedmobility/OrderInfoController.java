@@ -38,12 +38,6 @@ public class OrderInfoController {
         orderinfo.setCustomerId(customerId);    // 고객ID 입력
         orderinfo.setTime(time);                // 이용 시간 입력
         orderinfo.setPrice(time*1000);          // 시간 당 천원 입력
-
-        try {
-            orderinfo = orderInfoRepository.save(orderinfo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         
         // 결제 진행
         PaymentInfo paymentInfo = new PaymentInfo();
@@ -53,6 +47,12 @@ public class OrderInfoController {
 
         OrderApplication.applicationContext.getBean(PaymentInfoService.class)
             .pay(paymentInfo);
+
+        try {
+            orderinfo = orderInfoRepository.save(orderinfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return orderinfo;
     }
