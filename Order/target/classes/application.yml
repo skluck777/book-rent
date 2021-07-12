@@ -39,7 +39,7 @@ server:
   port: 8081
 api: 
   url: 
-    election: localhost:8083
+    order: localhost:8083
 ---
 
 spring:
@@ -67,4 +67,4 @@ spring:
           contentType: application/json
 api: 
   url: 
-    election: ${order-url}          
+    order: ${order-url}          
