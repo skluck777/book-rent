@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Dashboard
+  name: dashboard
   labels:
-    app: Dashboard
+    app: dashboard
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Dashboard
+      app: dashboard
   template:
     metadata:
       labels:
-        app: Dashboard
+        app: dashboard
     spec:
       containers:
-        - name: Dashboard
-          image: username/Dashboard:latest
+        - name: dashboard
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest
           ports:
             - containerPort: 8080
           readinessProbe:
