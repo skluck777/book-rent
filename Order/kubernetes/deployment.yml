@@ -23,7 +23,7 @@ spec:
             - name: ORDER-URL
               valueFrom:
                 configMapKeyRef:
-                  name: vote-configmap
+                  name: order-configmap
                   key: order-url   
           readinessProbe:
             httpGet:
