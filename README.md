@@ -216,7 +216,7 @@
 ```
 
 ## 게이트웨이 적용
-```
+```yml
 spring:
   profiles: default
   cloud:
@@ -257,7 +257,7 @@ spring:
 ## DDD 의 적용
 
 - 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. 
-``` C
+``` JAVA
   package sharedmobility;
 
   import javax.persistence.*;
@@ -343,7 +343,7 @@ spring:
 
 ```
 - Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
-```
+```JAVA
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -393,7 +393,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다.
 
 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 (로컬 주소는 변경 필요)
-``` C
+``` JAVA
 # (orderInfo) PaymentInfoService.java
 
   @FeignClient(name="Payment", url="http://localhost:8083")
@@ -404,7 +404,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   }
 ```
 - 사용신청 직후(@PostPersist) 결제를 요청하도록 처리
-```
+``` JAVA
 # OrderInfo.java (Entity)
 
   // 해당 엔티티 저장 후
@@ -455,7 +455,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 결제가 이루어진 후에 렌트승인 시스템으로 이를 알려주는 행위는 동기식이 아니라 비동기식으로 처리하여 대여를 위하여 결제가 블로킹 되지 않도록 처리한다.
 
 이를 위하여 결제시스템에 기록을 남긴 후에 곧바로 결제완료이 되었다는 도메인 이벤트를 카프카로 송출한다(Publish)
-``` C
+``` JAVA
   ...
     @PostPersist
     public void onPostPersist(){
@@ -469,7 +469,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
     }
 ```
 렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
-``` C
+``` JAVA
 public class PolicyHandler{
  ...
     @StreamListener(KafkaProcessor.INPUT)
@@ -522,7 +522,7 @@ ordered, paymentApproved, canceled, returned, paymentCanceled 이벤트에 따�
 
 자동생성된 소스 샘플은 아래와 같다
 Dashboard.java
-```
+``` JAVA
 package sharedmobility;
 
 import javax.persistence.*;
@@ -644,7 +644,7 @@ public class Dashboard {
 }
 ```
 DashboardRepository.java
-```
+```JAVA
 package sharedmobility;
 
 import org.springframework.data.repository.CrudRepository;
@@ -659,7 +659,7 @@ public interface DashboardRepository extends CrudRepository<Dashboard, Long> {
 }
 ```
 DashboardViewHandler.java
-```
+```JAVA
 package sharedmobility;
 
 import sharedmobility.config.kafka.KafkaProcessor;
@@ -795,7 +795,52 @@ dashbaord CQRS 결과는 아래와 같다
 
 
 
+## Config Map
 
+- 변경 가능성이 있는 설정을 ConfigMap을 사용하여 관리  
+  - order 서비스에서 바라보는 payment 서비스 url 일부분을 ConfigMap 사용하여 구현​  
+
+- order 서비스 내 FeignClient (order/src/main/java/sharedmobility/external/PaymentInfoService.java)
+```java
+@FeignClient(name="payment", url="http://${api.url.order}")
+public interface PaymentInfoService {
+    @RequestMapping(method= RequestMethod.POST, path="/payment")
+    public boolean pay(@RequestBody PaymentInfo paymentInfo);
+
+}
+```
+
+- order 서비스 application.yml
+```yml
+api: 
+  url: 
+    order: ${order-url}
+```
+
+- order 서비스 order.yml
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+  labels:
+    app: order
+spec:
+  -- 생략 --
+          env:
+            - name: ORDER-URL
+              valueFrom:
+                configMapKeyRef:
+                  name: order-configmap
+                  key: order-url         
+  -- 생략 --
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-configmap
+data:
+  order-url: payment:8080
+```
 
 
 
