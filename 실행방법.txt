@@ -92,3 +92,50 @@ mvn spring-boot:run
 #렌트 상태 Update 확인
 http localhost:8088/rent/7
 콘솔창에서 확인
+/***********************************************************/
+
+빌드/배포
+각 프로젝트 jar를 Dockerfile을 통해 Docker Image 만들어 ECR저장소에 올린다.
+EKS 클러스터에 접속한 뒤, 각 서비스의 deployment.yaml, service.yaml을 kuectl명령어로 서비스를 배포한다.
+
+코드 형상관리 : https://github.com/llyyjj99/PurifierRentalPJT 하위 repository에 각각 구성
+운영 플랫폼 : AWS의 EKS(Elastic Kubernetes Service)
+Docker Image 저장소 : AWS의 ECR(Elastic Container Registry)
+배포 명령어
+$ kubectl apply -f deployment.yml
+$ kubectl apply -f service.yaml
+
+----------------------------------------
+운영 > 실습 스크립트 > AWS 		
+오토스케일러를 위해 Metric-Server 무조건 설치필요		
+오류 발생 시, pod 상태를 확인		
+pod status 		
+		
+saga : 이벤트 드리븐한 통신 / 비동기		
+CQRS : 대시보드/마이페이지		
+Correlation : MSA 주문>주문취소 시, FindById 하여 해당 건 취소하는 걸 보여줘야됨		
+Req/Resp : 동기호출		
+GateWay : 단일접점 창구		
+Deploy or Pipeline : yaml 통해 쿠버네티스에 올리기만 해도됨		
+Circuit Breaker : 팀/개인이 동일 모듈에 설치된버전을 셤보면 점수안줌		
+HPA : 매트릭스 서버 설치 후, ??		
+"Readness-Probe : 여기에 설정된 소켓이나 web url 든 확인해서 보내서 무정지배포가 
+가능함을 증빙, 브라우저 갱신 후, availity 가 100 이됨을 증명"		
+config Map or PV(Persistence Volume) : 각각의 스테이지에 돌더라도 환경정보는 동일해야한다(seceret) , PV : 파일첨부와 같은 리소스를 스토리지가 갖고있는 볼륨을 MSA에 마운트하여야하며 증빙또한 필수		
+Polyglot : DB 저장소가 다른 저장소 형태면 됨		
+LiveNess- Probe : 		
+
+
+
+# AWS 클러스터 생성
+eksctl create cluster --name user01-eks --version 1.17 --nodegroup-name standard-workers --node-type t3.medium --nodes 4 --nodes-min 1 --nodes-max 3
+# AWS 클러스터 토큰 가져오기
+aws eks --region ap-northeast-2 update-kubeconfig --name user01-eks
+# AWS 컨테이너 레지스트리에 이미지 리파지토리 생성
+aws ecr create-repository --repository-name user01-final --image-scanning-configuration scanOnPush=true --region ap-northeast-2
+>> ECR 가서 내 이미지 URL 확인가능
+
+# 도커 로그인 필요 !! ( 관리콘솔 내 오른쪽상단 눌러서 내계정 아래 번호)
+docker login --username AWS -p $(aws ecr get-login-password --region ap-northeast-2) 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/
+
+# URL : 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-final
