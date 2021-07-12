@@ -23,7 +23,7 @@ spring:
         - id: Dashboard
           uri: http://localhost:8084
           predicates:
-            - Path= /dashboards/**
+            - Path= /dashboard/**
         - id: Rent
           uri: http://localhost:8085
           predicates:
@@ -47,24 +47,24 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: Order
-          uri: http://Order:8080
+        - id: order
+          uri: http://order:8080
           predicates:
             - Path=/order/** 
-        - id: Stock
-          uri: http://Stock:8080
+        - id: stock
+          uri: http://stock:8080
           predicates:
             - Path=/stock/** 
-        - id: Payment
-          uri: http://Payment:8080
+        - id: payment
+          uri: http://payment:8080
           predicates:
             - Path=/payment/** 
-        - id: Dashboard
-          uri: http://Dashboard:8080
+        - id: dashboard
+          uri: http://dashboard:8080
           predicates:
-            - Path= /dashboards/**
-        - id: Rent
-          uri: http://Rent:8080
+            - Path= /dashboard/**
+        - id: rent
+          uri: http://rent:8080
           predicates:
             - Path=/rent/** 
       globalcors:
