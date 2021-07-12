@@ -22,18 +22,17 @@ public class DashboardViewHandler {
         try {
 
             if (!ordered.validate()) return;
-
-            // view 객체 생성
-            Dashboard dashboard = new Dashboard();
-            // view 객체에 이벤트의 Value 를 set 함
-            dashboard.setOrderId(ordered.getOrderId());
-            dashboard.setOrderStatus(ordered.getOrderStatus());
-            dashboard.setCustomerId(ordered.getCustomerId());
-            dashboard.setOrderDate(ordered.getOrderDate());
-            // view 레파지 토리에 save
-            dashboardRepository.save(dashboard);
-
-
+            // view 객체 조회
+            List<Dashboard> dashboardList = dashboardRepository.findByOrderId(ordered.getOrderId());
+            for(Dashboard dashboard : dashboardList){
+                // view 객체에 이벤트의 eventDirectValue 를 set 함
+                dashboard.setOrderId(ordered.getOrderId());
+                dashboard.setOrderStatus(ordered.getOrderStatus());
+                dashboard.setCustomerId(ordered.getCustomerId());
+                dashboard.setOrderDate(ordered.getOrderDate());
+                // view 레파지 토리에 save
+                dashboardRepository.save(dashboard);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -44,18 +43,16 @@ public class DashboardViewHandler {
     public void whenPaymentApproved_then_UPDATE_1(@Payload PaymentApproved paymentApproved) {
         try {
             if (!paymentApproved.validate()) return;
-                // view 객체 조회
-                    List<Dashboard> dashboardList = dashboardRepository.findByOrderId(paymentApproved.getOrderId());
-                    for(Dashboard dashboard : dashboardList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    dashboard.setPaymentId(paymentApproved.getPayId());
-                    dashboard.setPayDate(paymentApproved.getPayDate());
-                    dashboard.setPayStatus(paymentApproved.getPayStatus());
-                    dashboard.setPrice(paymentApproved.getPrice());
+                // view 객체 생성
+                Dashboard dashboard = new Dashboard();
+                // view 객체에 이벤트의 Value 를 set 함
+                dashboard.setOrderId(paymentApproved.getOrderId());
+                dashboard.setPaymentId(paymentApproved.getPayId());
+                dashboard.setPayDate(paymentApproved.getPayDate());
+                dashboard.setPayStatus(paymentApproved.getPayStatus());
+                dashboard.setPrice(paymentApproved.getPrice());
                 // view 레파지 토리에 save
                 dashboardRepository.save(dashboard);
-                }
-
         }catch (Exception e){
             e.printStackTrace();
         }

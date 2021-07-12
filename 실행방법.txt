@@ -8,9 +8,11 @@ bin\windows\kafka-server-start.bat config\server.properties
 
 4. 카프카 토픽 확인
 bin\windows\kafka-topics.bat -bootstrap-server localhost:9092 --list localhost:9092
+$kafka_home/bin/kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --list 127.0.0.1:9092
 
 5. 카프카 이벤트 확인
 bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic sharedmobility --from-beginning
+$kafka_home/bin/kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic sharedmobility
 
 6. order 실행
 OrderInfo.java 파일에서 32번째줄 변경

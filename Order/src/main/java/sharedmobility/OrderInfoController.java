@@ -45,13 +45,13 @@ public class OrderInfoController {
         paymentInfo.setPrice(time*1000);
         paymentInfo.setCustomerId(customerId);
 
-        OrderApplication.applicationContext.getBean(PaymentInfoService.class)
-            .pay(paymentInfo);
-
-        try {
-            orderinfo = orderInfoRepository.save(orderinfo);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(OrderApplication.applicationContext.getBean(PaymentInfoService.class)
+            .pay(paymentInfo)){
+            try {
+                orderinfo = orderInfoRepository.save(orderinfo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return orderinfo;

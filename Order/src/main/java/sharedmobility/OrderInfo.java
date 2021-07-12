@@ -25,16 +25,14 @@ public class OrderInfo {
 
     // 해당 엔티티 저장 후
     @PostPersist
-    public void onPostPersist(){
-
-        // 사용 주문 들어왔을 경우
+    public void onPostPersist() throws Exception{
         if("USE".equals(this.orderStatus)){
-            /*
-                Kafka 송출
-            */
-            Ordered ordered = new Ordered();
-            BeanUtils.copyProperties(this, ordered);
-            ordered.publish();   // ordered 카프카 송출
+                /* Kafka 송출 */
+                Ordered ordered = new Ordered();
+                BeanUtils.copyProperties(this, ordered);
+                ordered.publishAfterCommit();   // ordered 카프카 송출
+        }else{
+            throw new Exception("Payment system down");
         }
     }
 
