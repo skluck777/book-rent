@@ -413,37 +413,40 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
 - 적용 후 REST API 의 테스트
 
-사용신청(order) 발생 시, req/res 방식으로 결제(payment) 서비스를 호출하고
-결제 완료 후 발생하는 PayApproved Event 가 카프카로 송출된다. 
-PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
-이후 렌트승인 상태인 OrderId 에 대해 렌트신청 할 경우, 렌트(RENT) 상태로 변경되며 rent Event 가 카프카로 송출된다.
-재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다. 
+  - 사용신청(order) 발생 시, req/res 방식으로 결제(payment) 서비스를 호출하고 결제 완료 후 발생하는 PayApproved Event 가 카프카로 송출된다. 
 ```
-# orderInfo 서비스의 킥보드 사용 신청(주문) 
+  # orderInfo 서비스의 킥보드 사용 신청(주문) 
   http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
 ```  
   ![order](https://user-images.githubusercontent.com/30138356/125385992-82afd500-e3d6-11eb-9f7a-64451dd0931f.PNG)
 ```
-# 주문 후 결제 및 렌트 상태 확인 ( payStatus = PAID / rentStatus = APPROVE )
+  # 주문 후 결제 상태 확인 ( payStatus = PAID )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
-  ```
+```
   ![Payment 상태](https://user-images.githubusercontent.com/30138356/125385995-83486b80-e3d6-11eb-9bac-c9c8b175f72b.PNG)
+
+
+  - PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
   ```
+  # 주문 후 결제 상태 확인 ( rentStatus = APPROVE )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
   ```
   ![rent 상태](https://user-images.githubusercontent.com/30138356/125385996-83e10200-e3d6-11eb-94d5-ff5dad5431bf.PNG)
+
+  - 이후 렌트승인 상태인 OrderId 에 대해 렌트신청 할 경우, 렌트(RENT) 상태로 변경되며 rent Event 가 카프카로 송출된다.
 ```
 # 렌트 신청 ( rentStatus = APPROVE 상태가 아니면 렌트 불가, 렌트 성공 시, rentStatus = RENT 로 변경 )
   http PUT http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
-  ```
+```
   ![rent 후 rent 상태](https://user-images.githubusercontent.com/30138356/125386338-11bced00-e3d7-11eb-9e10-0a1b051706fc.PNG)
 
+- 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다. 
 ```
-# 렌트 후 Rent Event 수신한 Stock 서비스의 재고 차감 확인 ( 재고 차감/증가 이력만 남김 )
+  # 렌트 후 Rent Event 수신한 Stock 서비스의 재고 차감 확인 ( 재고 차감/증가 이력만 남김 )
   ```
   ![재고이력소스](https://user-images.githubusercontent.com/30138356/125386433-40d35e80-e3d7-11eb-81df-06e1ddf8d29d.PNG)
 ```
-# 재고 차감 내역 콘솔에서 확인
+  # 재고 차감 내역 콘솔에서 확인
 ```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
