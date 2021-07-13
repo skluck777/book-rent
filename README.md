@@ -453,6 +453,23 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ## Correlation-key
 - 렌트 취소 작업을 통해, Correlation-key 연결을 검증한다
 
+```
+# 사용 신청 
+```
+![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
+```
+# 렌트 신청 
+```
+![렌트처리](https://user-images.githubusercontent.com/30138356/125393661-52bafe80-e3e3-11eb-9cd7-62c22ff4b225.PNG)
+```
+# 반납 처리
+```
+![반납처리](https://user-images.githubusercontent.com/30138356/125393660-52bafe80-e3e3-11eb-99d0-0e405e39bfc3.PNG)
+```
+# 사용신청 내역과 렌트 내역 확인 ( 상태가 RETURN 으로 변경됨 ) 
+```
+![오더와 렌트상태](https://user-images.githubusercontent.com/30138356/125393657-5189d180-e3e3-11eb-91fb-3df9210e4a86.PNG)
+
 ## 동기식 호출 과 Fallback 처리
 - 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다.
