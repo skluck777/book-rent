@@ -23,7 +23,7 @@ spring:
         - id: Dashboard
           uri: http://localhost:8084
           predicates:
-            - Path= /dashboard/**
+            - Path= /dashboards/**
         - id: Rent
           uri: http://localhost:8085
           predicates:
@@ -62,7 +62,7 @@ spring:
         - id: dashboard
           uri: http://dashboard:8080
           predicates:
-            - Path= /dashboard/**
+            - Path= /dashboards/**
         - id: rent
           uri: http://rent:8080
           predicates:
