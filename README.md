@@ -833,6 +833,150 @@ dashbaord CQRS 결과는 아래와 같다
 
 # 운영
 
+## Deploy / Pipeline
+각 구현체 들의 pipeline build script 는 shared-mobility/kubernetes/sharedmobility 내 
+포함되어 있다. ( ex. order.yml )
+
+- Build 및 ECR 에 Build/Push 하기
+```
+# order
+cd Order
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
+
+# payment
+cd ..
+cd Payment
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:latest
+
+# rent
+cd ..
+cd Rent
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:latest
+
+# stock
+cd ..
+cd Stock
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:latest
+
+# dashboard
+cd ..
+cd Dashboard
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest
+
+# gateway
+cd ..
+cd gateway
+mvn package
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:latest .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:latest
+```
+
+- Kubernetes Deploy 및 Service 생성
+```
+cd ..
+kubectl apply  -f kubernetes/sharedmobility/order.yml
+kubectl apply  -f kubernetes/sharedmobility/payment.yml
+kubectl apply  -f kubernetes/sharedmobility/rent.yml
+kubectl apply  -f kubernetes/sharedmobility/stock.yml
+kubectl apply  -f kubernetes/sharedmobility/dashboard.yml
+kubectl apply  -f kubernetes/sharedmobility/gateway.yml
+```
+
+- kubernetes/sharedmobility/order.yml 파일
+```YML
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+  labels:
+    app: order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ORDER-URL
+              valueFrom:
+                configMapKeyRef:
+                  name: order-configmap
+                  key: order-url
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"                     
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order
+  labels:
+    app: order
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: order
+
+
+---
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-configmap
+data:
+  order-url: payment:8080
+```
+
+- Deploy 완료
 
 
 ## Config Map
@@ -881,14 +1025,44 @@ metadata:
 data:
   order-url: payment:8080
 ```
+## Circuit Breaker
+- 서킷 브레이킹 프레임워크 선택 : Hystrix 옵션을 사용하여 구현함
+시나리오는 사용신청(order)-->결제(payment) 시 RESTful Request/Response 로 구현되어 있고 
+결제 요청이 과도할 경우 CB 를 통하여 장애격리.
 
+- Hystrix 를 설정: 요청처리 쓰레드에서 처리시간이 610 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
+```yml
+# order.yml
 
+hystrix:
+  command:
+    # 전역설정
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 610
+```
 
+- 피호출 서비스(결제:payment) 의 부하 처리
+```JAVA
+    @PostPersist
+    public void onPostPersist(){
+        // 부하테스트 주석
+        try {
+            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // 결제 완료 후 KAFKA 전송
+        if(this.payStatus == "PAIED"){
+            PaymentApproved paymentApproved = new PaymentApproved();
+            BeanUtils.copyProperties(this, paymentApproved);
+            paymentApproved.publishAfterCommit();
+        }
+    }
+```
 
-
-
-
-
+- siege 툴을 통한 서킷 브레이커 동작 확인
+![image](https://user-images.githubusercontent.com/30138356/125381495-f6e67a80-e3ce-11eb-85fc-d6b454018209.PNG)
+![image](https://user-images.githubusercontent.com/30138356/125381513-006fe280-e3cf-11eb-9323-fe7775b8b1b4.PNG)
 
 
 ########################## 샘플
