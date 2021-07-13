@@ -1072,6 +1072,7 @@ data:
 ![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
 
 - 정상작동 중 확인
+
 ![image](https://user-images.githubusercontent.com/22028798/125394378-906c5700-e3e4-11eb-9728-ed329ef46efc.png)
 
 - 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인
