@@ -412,6 +412,11 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 
 ```
 - 적용 후 REST API 의 테스트
+사용신청(order) 발생 시, req/res 방식으로 결제(payment) 서비스를 호출하고
+결제 완료 후 발생하는 PayApproved Event 가 카프카로 송출된다. 
+PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
+이후 렌트승인 상태인 OrderId 에 대해 렌트신청 할 경우, 렌트(RENT) 상태로 변경되며 rent Event 가 카프카로 송출된다.
+재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다. 
 ```
 # orderInfo 서비스의 킥보드 사용 신청(주문) 
   http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
@@ -502,7 +507,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
 ![13](https://user-images.githubusercontent.com/30138356/125189975-cfc86580-e275-11eb-9b0c-dec97c2ede61.PNG)
 
-또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. 
+과도한 요청시에 서비스 장애 벌어질 수 있음에 유의
 
 ## 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
 결제가 이루어진 후에 렌트승인 시스템으로 이를 알려주는 행위는 동기식이 아니라 비동기식으로 처리하여 대여를 위하여 결제가 블로킹 되지 않도록 처리한다.
