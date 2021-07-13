@@ -977,7 +977,7 @@ data:
 ```
 
 - Deploy 완료
-
+![image](https://user-images.githubusercontent.com/30138356/125383175-f7ccdb80-e3d1-11eb-81c5-522009d5a4ce.PNG)
 
 ## Config Map
 
