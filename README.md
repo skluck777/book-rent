@@ -1066,6 +1066,16 @@ data:
  ![KakaoTalk_20210713_121351158](https://user-images.githubusercontent.com/25606601/125391517-9b70b880-e3df-11eb-8cf0-4a4bed0fb526.png)
  ![KakaoTalk_20210713_121404148](https://user-images.githubusercontent.com/25606601/125391518-9b70b880-e3df-11eb-8b71-e98a1555b53d.png)
 
+## Self-healing (Liveness Probe)
+- deployment.yml에 정상 적용되어 있는 livenessProbe
+![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
+- 정상작동 중 확인
+![image](https://user-images.githubusercontent.com/22028798/125394378-906c5700-e3e4-11eb-9728-ed329ef46efc.png)
+- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인
+![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
+![image](https://user-images.githubusercontent.com/22028798/125394515-c01b5f00-e3e4-11eb-8bb3-0f7318c3adb4.png)
+
+
 ## Config Map
 
 - 변경 가능성이 있는 설정을 ConfigMap을 사용하여 관리  
