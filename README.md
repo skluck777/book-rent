@@ -451,7 +451,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
 ## Correlation-key
-- 렌트 취소 작업을 통해, Correlation-key 연결을 검증한다
+- 사용 반납 작업을 통해, Correlation-key 연결을 검증한다
 
 ```
 # 사용 신청 
