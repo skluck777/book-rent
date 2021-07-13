@@ -1,4 +1,4 @@
-이미지
+![image](https://user-images.githubusercontent.com/31404198/125399943-366f8f80-e3ec-11eb-9e78-357dd4b19e01.png)
 
 # 공유 모빌리티
 
