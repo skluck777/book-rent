@@ -292,6 +292,25 @@ spring:
               - "*"
             allowCredentials: true
 ```
+- gateway Service yml 에 loadBalancer 적용
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: gateway
+  type: LoadBalancer
+
+```
+- 적용 이미지
+![게이트웨이](https://user-images.githubusercontent.com/30138356/125386847-edaddb80-e3d7-11eb-9738-5c8904b3a28e.PNG)
 
 ## DDD 의 적용
 
@@ -394,37 +413,32 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
 - 적용 후 REST API 의 테스트
 ```
-# orderInfo 서비스의 킥보드 사용 신청(주문)
-  http POST localhost:8088/order customerId=99 time=3 
+# orderInfo 서비스의 킥보드 사용 신청(주문) 
+  http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
 ```  
-  ![1](https://user-images.githubusercontent.com/30138356/125185493-10b57f80-e260-11eb-8e4c-aadfd27cbe06.png)
+  ![order](https://user-images.githubusercontent.com/30138356/125385992-82afd500-e3d6-11eb-9f7a-64451dd0931f.PNG)
 ```
-# 주문 상태 확인
-  http localhost:8088/order/1	   # USE 상태 확인
+# 주문 후 결제 및 렌트 상태 확인 ( payStatus = PAID / rentStatus = APPROVE )
+  http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
   ```
-  ![2](https://user-images.githubusercontent.com/30138356/125185550-773a9d80-e260-11eb-85e8-862eb1564e69.PNG)
+  ![Payment 상태](https://user-images.githubusercontent.com/30138356/125385995-83486b80-e3d6-11eb-9bac-c9c8b175f72b.PNG)
   ```
-  http localhost:8088/payment/1  # AID 상태 확인
+  http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
   ```
-  ![3](https://user-images.githubusercontent.com/30138356/125185554-7dc91500-e260-11eb-93e5-f2e0ab3228c4.PNG)
-  ```
-  http localhost:8088/rent/1     # APPROVE 상태 확인
-  ```
-  ![4](https://user-images.githubusercontent.com/30138356/125185555-80c40580-e260-11eb-8bd8-2d2cd30febc9.PNG)
+  ![rent 상태](https://user-images.githubusercontent.com/30138356/125385996-83e10200-e3d6-11eb-94d5-ff5dad5431bf.PNG)
 ```
-# 렌트 신청
-  http PUT localhost:8088/rent/1
+# 렌트 신청 ( rentStatus = APPROVE 상태가 아니면 렌트 불가, 렌트 성공 시, rentStatus = RENT 로 변경 )
+  http PUT http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
   ```
-![7](https://user-images.githubusercontent.com/30138356/125185590-aea94a00-e260-11eb-8507-9dea1bb736be.PNG)
+  ![rent 후 rent 상태](https://user-images.githubusercontent.com/30138356/125386338-11bced00-e3d7-11eb-9e10-0a1b051706fc.PNG)
+
 ```
-# 렌트 상태 확인
-  http localhost:8088/rent         # RENT 상태 확인
+# 렌트 후 Rent Event 수신한 Stock 서비스의 재고 차감 확인 ( 재고 차감/증가 이력만 남김 )
   ```
-![5](https://user-images.githubusercontent.com/30138356/125185575-946f6c00-e260-11eb-952d-b893fcb05bcf.PNG)
+  ![재고이력소스](https://user-images.githubusercontent.com/30138356/125386433-40d35e80-e3d7-11eb-81df-06e1ddf8d29d.PNG)
 ```
-# 렌트 후 차감 확인
-  콘솔에서 확인
-  ```
+# 재고 차감 내역 콘솔에서 확인
+```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
 ## 동기식 호출 과 Fallback 처리
