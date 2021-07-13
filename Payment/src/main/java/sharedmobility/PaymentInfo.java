@@ -21,10 +21,16 @@ public class PaymentInfo {
     public void onPostPersist(){
         // 결제 완료 후 KAFKA 전송
         if(this.payStatus == "PAIED"){
+            try {
+                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             PaymentApproved paymentApproved = new PaymentApproved();
             BeanUtils.copyProperties(this, paymentApproved);
             paymentApproved.publishAfterCommit();
         }
+        
 
     }
     @PostUpdate
