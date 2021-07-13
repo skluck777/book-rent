@@ -1055,7 +1055,7 @@ data:
 
 - siege로 부하를 시작하고 가용률이 100%에서 63%로 떨어진 것을 확인
  ![KakaoTalk_20210713_115034531](https://user-images.githubusercontent.com/25606601/125391511-99a6f500-e3df-11eb-88c0-6eb8dad5406d.png)
- ![KakaoTalk_20210713_121328327](https://user-images.githubusercontent.com/25606601/125391513-9a3f8b80-e3df-11eb-839f-c580bc67733e.png)
+
 
 - 서비스를 다시 올리고 운영상태를 모니터링 
  ![KakaoTalk_20210713_121333338](https://user-images.githubusercontent.com/25606601/125391514-9a3f8b80-e3df-11eb-8c62-6d31cc41ca81.png)
