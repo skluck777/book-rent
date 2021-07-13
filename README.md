@@ -1078,7 +1078,7 @@ data:
 - 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인
 
 ![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
-![image](https://user-images.githubusercontent.com/22028798/125394515-c01b5f00-e3e4-11eb-8bb3-0f7318c3adb4.png)
+![image](https://user-images.githubusercontent.com/22028798/125394858-4c2d8680-e3e5-11eb-98d6-3a7e3409bb6e.png)
 
 
 ## Config Map
