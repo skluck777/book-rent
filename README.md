@@ -411,7 +411,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 }
 
 ```
-- 적용 후 REST API 의 테스트
+### 적용 후 REST API 의 테스트
 
   - 사용신청(order) 발생 시, req/res 방식으로 결제(payment) 서비스를 호출하고 결제 완료 후 발생하는 PayApproved Event 가 카프카로 송출된다. 
 ```
