@@ -26,7 +26,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: order-configmap
-                  key: order-url              
+                  key: order-url                    
           readinessProbe:
             httpGet:
               path: '/actuator/health'
@@ -43,6 +43,13 @@ spec:
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
 
 
 ---
