@@ -48,6 +48,7 @@
     1. 결제시스템이 과중되면 사용자를 잠시동안 받지 않고 결제를 잠시후에 하도록 유도한다 -> Circuit breaker, fallback
 1. 성능
     1. 사용자가 자주 예약관리에서 확인할 수 있는 예약상태를 예약시스템(프론트엔드)에서 확인할 수 있어야 한다 -> CQRS
+    1. 예약상태에 따라 카톡 등으로 알림을 줄 수 있어야 한다 -> Event driven
 
 
 # 체크포인트
@@ -1043,29 +1044,18 @@ data:
 
 
 ## 무정지 재배포(Readiness Probe)
+- 현재 정상적으로 동작중인 상황 확인
+![image](https://user-images.githubusercontent.com/22028798/125400383-c6add480-e3ec-11eb-8e0b-aeddf0a0c8fb.png)
 
-- siege로 부하를 주기전 운영 상태의 워크로드를 모니터링
- ![KakaoTalk_20210713_114855317](https://user-images.githubusercontent.com/25606601/125391504-97dd3180-e3df-11eb-9805-c62360c7c3d3.png)
- ![KakaoTalk_20210713_114857158](https://user-images.githubusercontent.com/25606601/125391507-9875c800-e3df-11eb-8d8a-8003a9eb3e76.png)
- ![KakaoTalk_20210713_114858955](https://user-images.githubusercontent.com/25606601/125391509-990e5e80-e3df-11eb-8fed-f15c4b026c34.png)
+- order.yml 파일에 Readiness Probe 부분 설정
+![image](https://user-images.githubusercontent.com/22028798/125400485-e5ac6680-e3ec-11eb-92ca-96c3abe91876.png)
 
-- Autoscaler 설정이 있으므로 현재는 가용이 100%, 무정재 재배포를 증명하기 위해 Autoscaler 설정을 제거하고 다시 부하시작
- ![KakaoTalk_20210713_114900577](https://user-images.githubusercontent.com/25606601/125391510-990e5e80-e3df-11eb-9e0a-285a1e8c7012.png)
+- 디플로이 시작
+![image](https://user-images.githubusercontent.com/22028798/125400543-fc52bd80-e3ec-11eb-8dc6-1a8ac53ef31d.png)
 
-- siege로 부하를 시작하고 가용률이 100%에서 63%로 떨어진 것을 확인
- ![KakaoTalk_20210713_115034531](https://user-images.githubusercontent.com/25606601/125391511-99a6f500-e3df-11eb-88c0-6eb8dad5406d.png)
+- siege로 부하 시작 -> 가용률 100% 확인
+![image](https://user-images.githubusercontent.com/22028798/125400628-18565f00-e3ed-11eb-9c9c-ea4c64c6717d.png)
 
-
-- 서비스를 다시 올리고 운영상태를 모니터링 
- ![KakaoTalk_20210713_121333338](https://user-images.githubusercontent.com/25606601/125391514-9a3f8b80-e3df-11eb-8c62-6d31cc41ca81.png)
- ![KakaoTalk_20210713_121338267](https://user-images.githubusercontent.com/25606601/125391515-9ad82200-e3df-11eb-9cb9-d69edbfadf8d.png)
-
-- Readiness Probe 설정이 Pod의 상태를 비정상으로 판단해 사용할 수 없음을 표시하고 서비스에서 제외 
- ![KakaoTalk_20210713_121343142](https://user-images.githubusercontent.com/25606601/125391516-9ad82200-e3df-11eb-96d9-8933513e1c3f.png)
-
-- 동일한 시나리오로 재배포 한 후 Availability 확인, 운영시간동안 100%로 무정지 재배포가 된 것으로 확인
- ![KakaoTalk_20210713_121351158](https://user-images.githubusercontent.com/25606601/125391517-9b70b880-e3df-11eb-8cf0-4a4bed0fb526.png)
- ![KakaoTalk_20210713_121404148](https://user-images.githubusercontent.com/25606601/125391518-9b70b880-e3df-11eb-8b71-e98a1555b53d.png)
 
 ## Self-healing (Liveness Probe)
 - deployment.yml에 정상 적용되어 있는 livenessProbe
