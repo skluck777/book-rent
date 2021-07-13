@@ -189,7 +189,7 @@
 
 ## 헥사고날 아키텍처 다이어그램 도출
     
-![image](https://user-images.githubusercontent.com/31404198/125151426-f8bafe80-e180-11eb-9229-d3d745d80243.png)
+![image](https://user-images.githubusercontent.com/31404198/125391885-218cff00-e3e0-11eb-9663-05a0d58a28d7.png)
 
     - Chris Richardson, MSA Patterns 참고하여 Inbound adaptor와 Outbound adaptor를 구분함
     - 호출관계에서 PubSub 과 Req/Resp 를 구분함
@@ -449,6 +449,9 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   # 재고 차감 내역 콘솔에서 확인
 ```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
+
+## Correlation-key
+- 렌트 취소 작업을 통해, Correlation-key 연결을 검증한다
 
 ## 동기식 호출 과 Fallback 처리
 - 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
@@ -868,6 +871,9 @@ dashbaord CQRS 결과는 아래와 같다
 		    <scope>runtime</scope>
 		</dependency>
 ```
+- 변경 후에도 정상 구동됨을 확인
+![구동확인1](https://user-images.githubusercontent.com/30138356/125391898-2782e000-e3e0-11eb-8f50-5c1a3ff963f8.PNG)
+![구동확인](https://user-images.githubusercontent.com/30138356/125391896-2651b300-e3e0-11eb-9be6-2410b0e51e49.PNG)
 
 # 운영
 
