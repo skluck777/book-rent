@@ -906,43 +906,43 @@ dashbaord CQRS 결과는 아래와 같다
 # order
 cd Order
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:v1 .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:v1
 
 # payment
 cd ..
 cd Payment
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:v1 .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:v1
 
 # rent
 cd ..
 cd Rent
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:v1 .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:v1
 
 # stock
 cd ..
 cd Stock
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:v1 .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:v1
 
 # dashboard
 cd ..
 cd Dashboard
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:v1 .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:v1
 
 # gateway
 cd ..
 cd gateway
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:latest .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:latest
+docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:v1 .
+docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:v1
 ```
 
 - Kubernetes Deploy 및 Service 생성
@@ -982,7 +982,7 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: ORDER-URL
+            - name: order-url  //주의 : ORDER-URL
               valueFrom:
                 configMapKeyRef:
                   name: order-configmap
