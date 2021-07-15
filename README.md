@@ -126,9 +126,9 @@
 ![이벤트도출](https://user-images.githubusercontent.com/85722736/125713265-202f6dab-5fd8-4954-885a-64c93417e65e.JPG)
 
 ### 부적격 이벤트 탈락
-![부적격이벤트](https://user-images.githubusercontent.com/85722736/125713387-5e011153-9c92-47f6-87bf-1ec526ff8467.JPG)
+![부적격이벤트2](https://user-images.githubusercontent.com/85722736/125715544-d46355d6-d8b5-4a0a-bc93-5ef648b5b4b3.JPG)
 
-    - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
+    - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함(상태 변경 없는 등)
 
 ### 액터, 커맨드 부착하여 읽기 좋게
 ![image](https://user-images.githubusercontent.com/31404198/125081045-830f4e00-e100-11eb-810c-f3d93b810b54.png)
