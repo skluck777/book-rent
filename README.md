@@ -119,7 +119,7 @@
   ![image](https://user-images.githubusercontent.com/31404198/125080676-0ed4aa80-e100-11eb-8707-e7a178193d14.png)
 
 ## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과:  http://www.msaez.io/#/storming/qTPVkyZojONcrS0xJzeIbYjPXMl1/385eb70fafd285bf582522ab97f45e92
+* MSAEz 로 모델링한 이벤트스토밍 결과:  http://www.msaez.io/#/storming/pZlKZjkVgfSv6CxkM0M17v35IYX2/e3386d17c3569de90d68e13b65bd86f2
 
 
 ### 이벤트 도출
