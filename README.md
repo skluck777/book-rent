@@ -113,10 +113,10 @@
 
 
 ## AS-IS 조직 (Horizontally-Aligned)
-  ![image](https://user-images.githubusercontent.com/31404198/125080475-ccab6900-e0ff-11eb-819f-7fdd7c12d9d6.png)
+![image](https://user-images.githubusercontent.com/85722736/125712998-28cd3c8b-431d-4bd2-8311-1b2dc1782ef7.png)JPG)
 
 ## TO-BE 조직 (Vertically-Aligned)
-  ![image](https://user-images.githubusercontent.com/31404198/125080676-0ed4aa80-e100-11eb-8707-e7a178193d14.png)
+![tobe조직](https://user-images.githubusercontent.com/85722736/125712957-58ea2b64-3722-4a4c-be26-b606fc76df27.JPG)
 
 ## Event Storming 결과
 * MSAEz 로 모델링한 이벤트스토밍 결과:  http://www.msaez.io/#/storming/pZlKZjkVgfSv6CxkM0M17v35IYX2/e3386d17c3569de90d68e13b65bd86f2
