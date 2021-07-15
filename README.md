@@ -218,7 +218,7 @@
   mvn spring-boot:run
 ```
 
-## 게이트웨이 적용
+## 게이트웨이 적용  \\ 어떻게 들어가는지??
 ```yml
 spring:
   profiles: default
