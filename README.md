@@ -123,10 +123,10 @@
 
 
 ### 이벤트 도출
-![image](https://user-images.githubusercontent.com/31404198/125080856-48a5b100-e100-11eb-90d4-a738c74118ff.png)
+![이벤트도출](https://user-images.githubusercontent.com/85722736/125713265-202f6dab-5fd8-4954-885a-64c93417e65e.JPG)
 
 ### 부적격 이벤트 탈락
-![image](https://user-images.githubusercontent.com/31404198/125080894-53f8dc80-e100-11eb-8fc8-fe760889d6ea.png)
+![부적격이벤트](https://user-images.githubusercontent.com/85722736/125713387-5e011153-9c92-47f6-87bf-1ec526ff8467.JPG)
 
     - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
 
