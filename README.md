@@ -113,7 +113,7 @@
 
 
 ## AS-IS 조직 (Horizontally-Aligned)
-![image](https://user-images.githubusercontent.com/85722736/125712998-28cd3c8b-431d-4bd2-8311-1b2dc1782ef7.png)JPG)
+![image](https://user-images.githubusercontent.com/85722736/125712998-28cd3c8b-431d-4bd2-8311-1b2dc1782ef7.png)
 
 ## TO-BE 조직 (Vertically-Aligned)
 ![tobe조직](https://user-images.githubusercontent.com/85722736/125712957-58ea2b64-3722-4a4c-be26-b606fc76df27.JPG)
