@@ -318,7 +318,7 @@ spec:
 
 - 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. # cartoon-rent/Payment/src/main/java/cartoonrent/PaymentInfo.java 
 ``` JAVA
-  package sharedmobility;
+  package cartoonrent;
 
   import javax.persistence.*;
   import org.springframework.beans.BeanUtils;
@@ -607,7 +607,7 @@ ordered, paymentApproved, canceled, returned, paymentCanceled 이벤트에 따�
 자동생성된 소스 샘플은 아래와 같다
 Dashboard.java
 ``` JAVA
-package sharedmobility;
+package cartoonrent;
 
 import javax.persistence.*;
 import java.util.List;
@@ -729,7 +729,7 @@ public class Dashboard {
 ```
 DashboardRepository.java
 ```JAVA
-package sharedmobility;
+package cartoonrent;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -744,9 +744,9 @@ public interface DashboardRepository extends CrudRepository<Dashboard, Long> {
 ```
 DashboardViewHandler.java
 ```JAVA
-package sharedmobility;
+package cartoonrent;
 
-import sharedmobility.config.kafka.KafkaProcessor;
+import cartoonrent.config.kafka.KafkaProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -947,15 +947,15 @@ docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:v1
 - Kubernetes Deploy 및 Service 생성
 ```
 cd ..
-kubectl apply  -f kubernetes/sharedmobility/order.yml
-kubectl apply  -f kubernetes/sharedmobility/payment.yml
-kubectl apply  -f kubernetes/sharedmobility/rent.yml
-kubectl apply  -f kubernetes/sharedmobility/stock.yml
-kubectl apply  -f kubernetes/sharedmobility/dashboard.yml
-kubectl apply  -f kubernetes/sharedmobility/gateway.yml
+kubectl apply  -f kubernetes/cartoonrent/order.yml
+kubectl apply  -f kubernetes/cartoonrent/payment.yml
+kubectl apply  -f kubernetes/cartoonrent/rent.yml
+kubectl apply  -f kubernetes/cartoonrent/stock.yml
+kubectl apply  -f kubernetes/cartoonrent/dashboard.yml
+kubectl apply  -f kubernetes/cartoonrent/gateway.yml
 ```
 
-- kubernetes/sharedmobility/order.yml 파일
+- kubernetes/cartoonrent/order.yml 파일
 ```YML
 ---
 
@@ -1081,7 +1081,7 @@ data:
 - 변경 가능성이 있는 설정을 ConfigMap을 사용하여 관리  
   - order 서비스에서 바라보는 payment 서비스 url 일부분을 ConfigMap 사용하여 구현​  
 
-- order 서비스 내 FeignClient (order/src/main/java/sharedmobility/external/PaymentInfoService.java)
+- order 서비스 내 FeignClient (order/src/main/java/cartoonrent/external/PaymentInfoService.java)
 ```java
 @FeignClient(name="payment", url="http://${api.url.order}")
 public interface PaymentInfoService {

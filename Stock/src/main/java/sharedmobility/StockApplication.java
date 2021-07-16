@@ -1,5 +1,5 @@
-package sharedmobility;
-import sharedmobility.config.kafka.KafkaProcessor;
+package cartoonrent;
+import cartoonrent.config.kafka.KafkaProcessor;
 
 import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
