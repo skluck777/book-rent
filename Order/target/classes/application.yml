@@ -25,10 +25,10 @@ spring:
       bindings:
         event-in:
           group: Order
-          destination: sharedmobility
+          destination: cartoonrent
           contentType: application/json
         event-out:
-          destination: sharedmobility
+          destination: cartoonrent
           contentType: application/json
 
 logging:
@@ -60,10 +60,10 @@ spring:
       bindings:
         event-in:
           group: Order
-          destination: sharedmobility
+          destination: cartoonrent
           contentType: application/json
         event-out:
-          destination: sharedmobility
+          destination: cartoonrent
           contentType: application/json
 api: 
   url: 

@@ -1,10 +1,10 @@
-package sharedmobility;
+package cartoonrent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import sharedmobility.external.PaymentInfo;
-import sharedmobility.external.PaymentInfoService;
+import cartoonrent.external.PaymentInfo;
+import cartoonrent.external.PaymentInfoService;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

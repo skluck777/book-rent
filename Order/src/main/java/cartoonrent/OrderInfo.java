@@ -1,4 +1,4 @@
-package sharedmobility;
+package cartoonrent;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
 
-import sharedmobility.external.PaymentInfo;
-import sharedmobility.external.PaymentInfoService;
+import cartoonrent.external.PaymentInfo;
+import cartoonrent.external.PaymentInfoService;
 
 @Entity
 @Table(name="OrderInfo_table")
