@@ -1,6 +1,6 @@
-package sharedmobility;
+package cartoonrent;
 
-import sharedmobility.config.kafka.KafkaProcessor;
+import cartoonrent.config.kafka.KafkaProcessor;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
