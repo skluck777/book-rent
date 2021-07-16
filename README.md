@@ -217,7 +217,7 @@
   mvn spring-boot:run
 ```
 
-## 게이트웨이 적용  \\\ 어떻게 들어가는지?? & check 포인트 #cartoon-rent/gateway/src/main/resources/application.yml
+## 게이트웨이 적용  \\\ check 포인트(--S 사용관련) #cartoon-rent/gateway/src/main/resources/application.yml
 ```yml
 spring:
   profiles: default
