@@ -1,4 +1,4 @@
-package sharedmobility.external;
+package cartoonrent.external;
 
 public class PaymentInfo {
 
