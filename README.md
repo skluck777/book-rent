@@ -122,10 +122,10 @@
 
 
 ### 이벤트 도출
-![이벤트도출](https://user-images.githubusercontent.com/85722736/125713265-202f6dab-5fd8-4954-885a-64c93417e65e.JPG)
+![이벤트도출_1](https://user-images.githubusercontent.com/85722736/125873449-1dc82cfb-92bc-44b3-9bdb-e6b169a7eca1.JPG)
 
 ### 부적격 이벤트 탈락
-![부적격이벤트2](https://user-images.githubusercontent.com/85722736/125715544-d46355d6-d8b5-4a0a-bc93-5ef648b5b4b3.JPG)
+![부적격이벤트3](https://user-images.githubusercontent.com/85722736/125873495-8aa7f208-eaed-4e08-8bfa-140e5d4575b2.JPG)
 
     - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함(상태 변경 없는 등)
 
