@@ -18,11 +18,11 @@ spec:
     spec:
       containers:
         - name: order
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
+          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:v1
           ports:
             - containerPort: 8080
           env:
-            - name: ORDER-URL
+            - name: order-url
               valueFrom:
                 configMapKeyRef:
                   name: order-configmap
