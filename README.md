@@ -295,6 +295,7 @@ spring:
             allowCredentials: true
 ```
 - gateway Service yml 에 loadBalancer 적용
+# cartoon-rent/kubernetes/sharedmobility/gateway.yml
 ```yml
 apiVersion: v1
 kind: Service
