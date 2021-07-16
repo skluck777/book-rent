@@ -314,7 +314,7 @@ spec:
 - 적용 이미지
 ![게이트웨이](https://user-images.githubusercontent.com/30138356/125386847-edaddb80-e3d7-11eb-9738-5c8904b3a28e.PNG)
 
-## DDD 의 적용
+## DDD 의 적용 \\\ cartoon-rent/Payment/src/main/java/sharedmobility/PaymentInfo.java
 
 - 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. 
 ``` JAVA
