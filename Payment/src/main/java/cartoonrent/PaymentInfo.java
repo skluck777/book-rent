@@ -1,4 +1,4 @@
-package sharedmobility;
+package cartoonrent;
 
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
