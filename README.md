@@ -316,7 +316,7 @@ spec:
 
 ## DDD 의 적용 
 
-- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. # cartoon-rent/Payment/src/main/java/sharedmobility/PaymentInfo.java 
+- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 PaymentInfo 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하였다. # cartoon-rent/Payment/src/main/java/cartoonrent/PaymentInfo.java 
 ``` JAVA
   package sharedmobility;
 
@@ -897,7 +897,7 @@ dashbaord CQRS 결과는 아래와 같다
 # 운영
 
 ## Deploy / Pipeline
-각 구현체 들의 pipeline build script 는 shared-mobility/kubernetes/sharedmobility 내 
+각 구현체 들의 pipeline build script 는 cartoonrent/kubernetes/cartoonrent 내 
 포함되어 있다. ( ex. order.yml )
 
 - Build 및 ECR 에 Build/Push 하기
@@ -981,7 +981,7 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: order-url  //주의 : ORDER-URL
+            - name: order-url
               valueFrom:
                 configMapKeyRef:
                   name: order-configmap
