@@ -417,7 +417,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 
   - 사용신청(order) 발생 시, req/res 방식으로 결제(payment) 서비스를 호출하고 결제 완료 후 발생하는 PayApproved Event 가 카프카로 송출된다. 
 ```
-  # orderInfo 서비스의 오디오북 사용 신청(주문) 
+  # orderInfo 서비스의 만화책 사용 신청(주문) 
   http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
 ```  
   ![order](https://user-images.githubusercontent.com/30138356/125385992-82afd500-e3d6-11eb-9f7a-64451dd0931f.PNG)
@@ -557,7 +557,7 @@ public class PolicyHandler{
  ...
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPaymentApproved_Approve(@Payload PaymentApproved paymentApproved){
-        // 선택된 오디오북에 접근하여 해당 Order ID 의 렌트승인 상태로 변경
+        // 선택된 만화책에 접근하여 해당 Order ID 의 렌트승인 상태로 변경
         // 렌트 승인 상태인 Order Id 는 기기 접근 시 승인 처리됨.
         if(!paymentApproved.validate()) return;
 
