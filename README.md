@@ -130,29 +130,27 @@
     - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함(상태 변경 없는 등)
 
 ### 액터, 커맨드 부착하여 읽기 좋게
-![image](https://user-images.githubusercontent.com/31404198/125081045-830f4e00-e100-11eb-810c-f3d93b810b54.png)
+![1 액터, 커맨드 부착하여 읽기 좋게](https://user-images.githubusercontent.com/85722736/126092431-dd6d1bc2-a129-4bfa-aa1d-11c3a5c2192b.JPG)
 
 ### 어그리게잇으로 묶기
-![image](https://user-images.githubusercontent.com/31404198/125081386-e8633f00-e100-11eb-8b8a-f8383379072a.png)
+![2 어그리게잇으로 묶기](https://user-images.githubusercontent.com/85722736/126092454-1da9a9a9-817a-4798-b999-de04620326bd.JPG)
 
     - 예약, 대여처리, 결제정보, 재고는 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
 
 ### 바운디드 컨텍스트로 묶기
-
-![image](https://user-images.githubusercontent.com/31404198/125081538-16488380-e101-11eb-9f30-d8688c5d965c.png)
+![3 바운디드 컨텍스트로 묶기](https://user-images.githubusercontent.com/85722736/126092478-85c44e23-0603-4336-9e96-0080ce4303b6.JPG)
 
     - 도메인 서열 분리 
         - Core Domain:  예약(front), 대여 : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 예약의 경우 1주일 1회 미만, 대여의 경우 1개월 1회 미만
         - Supporting Domain: 재고   : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
         - General Domain:   결제 : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
 
-### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
-
-![image](https://user-images.githubusercontent.com/31404198/125081926-8a832700-e101-11eb-8f7d-7a32cd4189ab.png)
+### 폴리시 부착 
+(괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
+![4 폴리시 부착](https://user-images.githubusercontent.com/85722736/126092499-8934bc27-61d6-417e-a39c-c9c714dd45a0.JPG)
 
 ### 폴리시의 이동과 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
-
-![image](https://user-images.githubusercontent.com/31404198/125081998-9ec72400-e101-11eb-942f-a5beec455466.png)
+![5 폴리시의 이동과 컨텍스트 매핑_1](https://user-images.githubusercontent.com/85722736/126092537-65557574-6197-4b94-b784-4609ddbc5255.JPG)
 
 ### 완성된 1차 모형
 
@@ -182,8 +180,7 @@
     - 사용자는 대여상태를 대시보드에서 확인한다. (View-green sticker 의 추가로 ok)
 
 ### 비기능 요구사항에 대한 검증
-
-![image](https://user-images.githubusercontent.com/31404198/125188612-4ca41100-e26f-11eb-8139-2cb390446974.png)
+![6 비기능 요구사항에 대한 검증](https://user-images.githubusercontent.com/85722736/126092660-489bbc23-481a-4092-a6f9-5c2c0e12d579.JPG)
 
     - 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리
     - 고객 주문시 결제처리:  결제가 완료되지 않은 주문은 절대 대여를 할 수 없기 때문에, ACID 트랜잭션 적용. 주문완료시 결제처리에 대해서는 Request-Response 방식 처리
