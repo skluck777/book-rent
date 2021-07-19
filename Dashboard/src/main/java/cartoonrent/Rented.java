@@ -1,4 +1,4 @@
-package sharedmobility;
+package cartoonrent;
 
 public class Rented extends AbstractEvent {
 

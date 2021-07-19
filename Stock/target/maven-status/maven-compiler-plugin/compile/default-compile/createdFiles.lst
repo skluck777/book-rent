@@ -1,0 +1,12 @@
+cartoonrent\StockInfoController.class
+cartoonrent\StockInfoRepository.class
+cartoonrent\AbstractEvent$1.class
+cartoonrent\Returned.class
+cartoonrent\PolicyHandler.class
+cartoonrent\StockApplication.class
+cartoonrent\config\kafka\KafkaProcessor.class
+cartoonrent\AbstractEvent.class
+cartoonrent\StockReduced.class
+cartoonrent\StockIncreased.class
+cartoonrent\StockInfo.class
+cartoonrent\Rented.class
