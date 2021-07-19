@@ -217,6 +217,8 @@
 ```
 
 ## 게이트웨이 적용  \\\ check 포인트(--S 사용관련) #cartoon-rent/gateway/src/main/resources/application.yml
+- controller로 구현 > cartoon-rent/Order/src/main/java/cartoonrent/OrderInfoController.java
+
 ```yml
 spring:
   profiles: default
