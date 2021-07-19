@@ -171,6 +171,7 @@
 
 ![image](https://user-images.githubusercontent.com/31404198/125188569-35652380-e26f-11eb-9d41-cd6e23a87959.png)
 
+    # 취소에 따른 보상 트랜잭션을 설계(Saga Pattern)
     - 사용자가 만화책 주문을 취소한다. (ok)
     - 주문이 취소되면 결제가 취소된다. (ok)
 
