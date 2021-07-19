@@ -180,8 +180,7 @@
     - 사용자는 대여상태를 대시보드에서 확인한다. (View-green sticker 의 추가로 ok)
 
 ### 비기능 요구사항에 대한 검증
-
-![image](https://user-images.githubusercontent.com/31404198/125188612-4ca41100-e26f-11eb-8139-2cb390446974.png)
+![6 비기능 요구사항에 대한 검증](https://user-images.githubusercontent.com/85722736/126092660-489bbc23-481a-4092-a6f9-5c2c0e12d579.JPG)
 
     - 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리
     - 고객 주문시 결제처리:  결제가 완료되지 않은 주문은 절대 대여를 할 수 없기 때문에, ACID 트랜잭션 적용. 주문완료시 결제처리에 대해서는 Request-Response 방식 처리
