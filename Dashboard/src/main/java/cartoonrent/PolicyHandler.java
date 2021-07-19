@@ -1,6 +1,6 @@
-package sharedmobility;
+package cartoonrent;
 
-import sharedmobility.config.kafka.KafkaProcessor;
+import cartoonrent.config.kafka.KafkaProcessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -40,6 +40,13 @@ server:
 api: 
   url: 
     order: localhost:8083
+#feign:
+#  hystrix:
+#    enabled: true
+#hystrix:
+#  command:
+#    default:
+#      execution.isolation.thread.timeoutInMilliseconds: 610    
 ---
 
 spring:
@@ -68,3 +75,11 @@ spring:
 api: 
   url: 
     order: ${order-url}          
+
+# feign:
+#   hystrix:
+#     enabled: true
+# hystrix:
+#   command:
+#     default:
+#       execution.isolation.thread.timeoutInMilliseconds: 610

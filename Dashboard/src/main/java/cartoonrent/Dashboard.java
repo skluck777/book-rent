@@ -1,4 +1,4 @@
-package sharedmobility;
+package cartoonrent;
 
 import javax.persistence.*;
 import java.util.List;

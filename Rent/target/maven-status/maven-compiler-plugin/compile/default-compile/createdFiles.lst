@@ -1,6 +1,12 @@
-cartoonrent\RentInfoRepository.class
-cartoonrent\Returned.class
-cartoonrent\RentInfo.class
-cartoonrent\PaymentApproved.class
 cartoonrent\AbstractEvent$1.class
+cartoonrent\Returned.class
+cartoonrent\PolicyHandler.class
+cartoonrent\RentInfoController.class
+cartoonrent\OrderReturned.class
+cartoonrent\RentInfo.class
+cartoonrent\RentInfoRepository.class
+cartoonrent\PaymentApproved.class
+cartoonrent\config\kafka\KafkaProcessor.class
 cartoonrent\AbstractEvent.class
+cartoonrent\RentApplication.class
+cartoonrent\Rented.class
