@@ -480,7 +480,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 
 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 ( url 은 Config Map 적용 )
 ``` JAVA
-# (orderInfo) PaymentInfoService.java
+# cartoon-rent/Order/src/main/java/cartoonrent/external/PaymentInfoService.java
 
 @FeignClient(name="payment", url="http://${api.url.order}")
 public interface PaymentInfoService {
