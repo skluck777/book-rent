@@ -404,7 +404,7 @@ spec:
   }
 
 ```
-- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
+- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다. # cartoon-rent/Order/src/main/java/cartoonrent/OrderInfoRepository.java 
 ```JAVA
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -444,13 +444,13 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
   ![rent 후 rent 상태](https://user-images.githubusercontent.com/30138356/125386338-11bced00-e3d7-11eb-9e10-0a1b051706fc.PNG)
 
-- 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다. 
+- 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다.(cartoon-rent/Stock/src/main/java/cartoonrent/PolicyHandler.java)
 ```
   # 렌트 후 Rent Event 수신한 Stock 서비스의 재고 차감 확인 ( 재고 차감/증가 이력만 남김 )
   ```
   ![재고이력소스](https://user-images.githubusercontent.com/30138356/125386433-40d35e80-e3d7-11eb-81df-06e1ddf8d29d.PNG)
 ```
-  # 재고 차감 내역 콘솔에서 확인
+  # 재고 차감 내역 콘솔에서 확인 >> ?? 어디에서
 ```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
@@ -480,7 +480,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 
 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 ( url 은 Config Map 적용 )
 ``` JAVA
-# (orderInfo) PaymentInfoService.java
+# cartoon-rent/Order/src/main/java/cartoonrent/external/PaymentInfoService.java
 
 @FeignClient(name="payment", url="http://${api.url.order}")
 public interface PaymentInfoService {
@@ -553,7 +553,7 @@ public interface PaymentInfoService {
 
     }
 ```
-렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
+렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다(cartoon-rent/Rent/src/main/java/cartoonrent/PolicyHandler.java):
 ``` JAVA
 public class PolicyHandler{
  ...
@@ -579,7 +579,7 @@ public class PolicyHandler{
 ```
 렌트승인 시스템은 사용신청/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 렌트승인이 유지보수로 인해 잠시 내려간 상태라도 사용신청을 받는데 문제가 없다:
 ```
-# 렌트승인 서비스 (lectureSystem) 를 잠시 내려놓음
+# 렌트승인 서비스(rent)를 잠시 내려놓음
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
 ![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
@@ -1136,7 +1136,7 @@ data:
 
 - Hystrix 를 설정: 요청처리 쓰레드에서 처리시간이 610 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
 ```yml
-# order.yml
+# cartoon-rent/Order/src/main/resources/application.yml (주석해제)
 
 hystrix:
   command:
