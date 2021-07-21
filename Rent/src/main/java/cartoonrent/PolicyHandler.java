@@ -20,7 +20,7 @@ public class PolicyHandler{
     
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPaymentApproved_Approve(@Payload PaymentApproved paymentApproved){
-        // 유휴 킥보드에 접근하여 해당 Order ID 의 렌트승인 상태로 변경
+        // 선택된 만화책에 접근하여 해당 Order ID 의 렌트승인 상태로 변경
         // 렌트 승인 상태인 Order Id 는 기기 접근 시 승인 처리됨.
         if(!paymentApproved.validate()) return;
 
