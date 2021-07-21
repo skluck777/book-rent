@@ -553,7 +553,7 @@ public interface PaymentInfoService {
 
     }
 ```
-렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
+렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다(cartoon-rent/Rent/src/main/java/cartoonrent/PolicyHandler.java):
 ``` JAVA
 public class PolicyHandler{
  ...
