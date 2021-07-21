@@ -444,13 +444,13 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
   ![rent 후 rent 상태](https://user-images.githubusercontent.com/30138356/125386338-11bced00-e3d7-11eb-9e10-0a1b051706fc.PNG)
 
-- 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다. 
+- 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다.(cartoon-rent/Stock/src/main/java/cartoonrent/PolicyHandler.java)
 ```
   # 렌트 후 Rent Event 수신한 Stock 서비스의 재고 차감 확인 ( 재고 차감/증가 이력만 남김 )
   ```
   ![재고이력소스](https://user-images.githubusercontent.com/30138356/125386433-40d35e80-e3d7-11eb-81df-06e1ddf8d29d.PNG)
 ```
-  # 재고 차감 내역 콘솔에서 확인
+  # 재고 차감 내역 콘솔에서 확인 >> ?? 어디에서
 ```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
