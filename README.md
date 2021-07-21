@@ -579,7 +579,7 @@ public class PolicyHandler{
 ```
 렌트승인 시스템은 사용신청/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 렌트승인이 유지보수로 인해 잠시 내려간 상태라도 사용신청을 받는데 문제가 없다:
 ```
-# 렌트승인 서비스 (lectureSystem) 를 잠시 내려놓음
+# 렌트승인 서비스(rent)를 잠시 내려놓음
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
 ![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
