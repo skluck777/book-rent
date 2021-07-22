@@ -603,7 +603,8 @@ mvn spring-boot:run
 
 # 렌트 상태 Update 확인
 ```
-![11](https://user-images.githubusercontent.com/30138356/125189746-9fcc9280-e274-11eb-8ede-260754fa66d9.PNG)
+(삭제)![11](https://user-images.githubusercontent.com/30138356/125189746-9fcc9280-e274-11eb-8ede-260754fa66d9.PNG)
+![비동기-렌트상태확인](https://user-images.githubusercontent.com/85722736/126607399-63d5d0f5-a554-454c-b7f7-4be5b0eb9c34.JPG)
 
 
 ## CQRS
