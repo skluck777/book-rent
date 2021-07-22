@@ -427,6 +427,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
   # 주문 후 결제 상태 확인 ( payStatus = PAID )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
+  http localhost:8088/payment/1
 ```
 ![주문후결제상태확인](https://user-images.githubusercontent.com/85722736/126602575-294f4f1a-fe45-4e57-83d8-fac1b5172d79.JPG)
 
@@ -435,7 +436,6 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   ```
   # 주문 후 결제 상태 확인 ( rentStatus = APPROVE )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
-  http localhost:8088/payment/1
   ```
   ![rent 상태](https://user-images.githubusercontent.com/30138356/125385996-83e10200-e3d6-11eb-94d5-ff5dad5431bf.PNG)
 
