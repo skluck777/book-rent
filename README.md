@@ -563,7 +563,8 @@ public interface PaymentInfoService {
 
     }
 ```
-렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다(cartoon-rent/Rent/src/main/java/cartoonrent/PolicyHandler.java):
+렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다
+(cartoon-rent/Rent/src/main/java/cartoonrent/PolicyHandler.java):
 ``` JAVA
 public class PolicyHandler{
  ...
@@ -592,7 +593,8 @@ public class PolicyHandler{
 # 렌트승인 서비스(rent)를 잠시 내려놓음
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
-![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
+(삭제)![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
+![비동기-렌트승인](https://user-images.githubusercontent.com/85722736/126607023-484100ed-e10c-4cd0-bc7d-787df788dadb.JPG)
 
 ```
 # 렌트승인 서비스 기동
