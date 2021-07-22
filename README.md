@@ -583,7 +583,7 @@ public class PolicyHandler{
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
 ![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
-![10](https://user-images.githubusercontent.com/30138356/125189710-6e53c700-e274-11eb-9cdf-8c1c66830a35.PNG)
+![동기호출실패](https://user-images.githubusercontent.com/85722736/126597327-3dd931e1-1c1f-4021-9744-511895f217da.JPG)
 ```
 # 렌트승인 서비스 기동
 cd rent
