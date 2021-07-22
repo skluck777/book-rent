@@ -532,7 +532,6 @@ public interface PaymentInfoService {
   # 사용 신청 처리
   http POST localhost:8088/order customerId=11 time=3 orderId=20  #Success
 ```
-![13](https://user-images.githubusercontent.com/30138356/125189975-cfc86580-e275-11eb-9b0c-dec97c2ede61.PNG)
 ![결제_재기동](https://user-images.githubusercontent.com/85722736/126598371-7f417edf-32e0-4950-aaa1-e101997a8622.JPG)
 
 과도한 요청시에 서비스 장애 벌어질 수 있음에 유의
