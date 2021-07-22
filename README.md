@@ -523,7 +523,7 @@ public interface PaymentInfoService {
   # 사용 신청 처리
   http POST localhost:8088/order customerId=11 time=3 orderId=20  # Fail
 ```
-![12](https://user-images.githubusercontent.com/30138356/125189944-aa3b5c00-e275-11eb-81c2-514085209b99.PNG)
+![동기호출실패](https://user-images.githubusercontent.com/85722736/126597327-3dd931e1-1c1f-4021-9744-511895f217da.JPG)
 ```
   # 결제서비스 재기동
   cd payment
