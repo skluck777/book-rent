@@ -466,19 +466,23 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
 # 사용 신청 
 ```
-![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
+(삭제)![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
+![Correlation-key-사용신청](https://user-images.githubusercontent.com/85722736/126606012-0d7c0dba-8acc-4d01-9870-7961d66c9661.JPG)
 ```
 # 렌트 신청 
 ```
 ![렌트처리](https://user-images.githubusercontent.com/30138356/125393661-52bafe80-e3e3-11eb-9cd7-62c22ff4b225.PNG)
+![Correlation-key-렌트신청](https://user-images.githubusercontent.com/85722736/126606093-1bf30759-2056-43f2-9edd-0fe3dbb57cc6.JPG)
 ```
 # 반납 처리
 ```
 ![반납처리](https://user-images.githubusercontent.com/30138356/125393660-52bafe80-e3e3-11eb-99d0-0e405e39bfc3.PNG)
+![Correlation-key-반납처리](https://user-images.githubusercontent.com/85722736/126606119-9a89ac28-e42d-444a-a0d3-bf166b8e5fcb.JPG)
 ```
 # 사용신청 내역과 렌트 내역 확인 ( 상태가 RETURN 으로 변경됨 ) 
 ```
 ![오더와 렌트상태](https://user-images.githubusercontent.com/30138356/125393657-5189d180-e3e3-11eb-91fb-3df9210e4a86.PNG)
+![Correlation-key-사용신청 렌트내역확인](https://user-images.githubusercontent.com/85722736/126606143-67d1c24d-b678-49e1-8f19-dc7a8babb172.JPG)
 
 ## 동기식 호출 과 Fallback 처리
 - 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
