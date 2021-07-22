@@ -421,19 +421,21 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
   # orderInfo 서비스의 만화책 사용 신청(주문) 
   http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
+  D:\0개인평가\cartoon-rent> http localhost:8088/order/1
 ```  
-  ![order](https://user-images.githubusercontent.com/30138356/125385992-82afd500-e3d6-11eb-9f7a-64451dd0931f.PNG)
+![사용신청_order](https://user-images.githubusercontent.com/85722736/126602421-dfda512d-1a2b-478a-90c2-0f9247b2c2c2.JPG)
 ```
   # 주문 후 결제 상태 확인 ( payStatus = PAID )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
 ```
-  ![Payment 상태](https://user-images.githubusercontent.com/30138356/125385995-83486b80-e3d6-11eb-9bac-c9c8b175f72b.PNG)
+![주문후결제상태확인](https://user-images.githubusercontent.com/85722736/126602575-294f4f1a-fe45-4e57-83d8-fac1b5172d79.JPG)
 
 
   - PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
   ```
   # 주문 후 결제 상태 확인 ( rentStatus = APPROVE )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
+  http localhost:8088/payment/1
   ```
   ![rent 상태](https://user-images.githubusercontent.com/30138356/125385996-83e10200-e3d6-11eb-94d5-ff5dad5431bf.PNG)
 
