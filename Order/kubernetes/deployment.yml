@@ -27,7 +27,7 @@ spec:
                   key: order-url   
           readinessProbe:
             httpGet:
-              path: '/order'  // '/actuator/health'
+              path: '/order'
               port: 8080
             initialDelaySeconds: 10
             timeoutSeconds: 2
@@ -35,7 +35,7 @@ spec:
             failureThreshold: 10
           livenessProbe:
             httpGet:
-              path: '/order' // '/actuator/health'
+              path: '/order'
               port: 8080
             initialDelaySeconds: 120
             timeoutSeconds: 2
