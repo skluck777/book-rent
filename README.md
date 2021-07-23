@@ -1066,7 +1066,7 @@ data:
 
 ![image](https://user-images.githubusercontent.com/22028798/125400383-c6add480-e3ec-11eb-8e0b-aeddf0a0c8fb.png)
 
-- Order/kubernetes/deployment.yml 파일에 Readiness Probe 부분 설정
+- cartoon-rent\kubernetes\cartoonrent\otder.yml 파일에 Readiness Probe 부분 설정(주석해제)
 
 ![image](https://user-images.githubusercontent.com/22028798/125400485-e5ac6680-e3ec-11eb-92ca-96c3abe91876.png)
 
