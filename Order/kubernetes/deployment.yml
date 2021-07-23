@@ -20,7 +20,7 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: ORDER-URL
+            - name: order-url
               valueFrom:
                 configMapKeyRef:
                   name: order-configmap
