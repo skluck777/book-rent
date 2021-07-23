@@ -1109,14 +1109,14 @@ public interface PaymentInfoService {
 }
 ```
 
-- order 서비스 application.yml
+- order 서비스 application.yml (Order/src/main/resources/application.yml)
 ```yml
 api: 
   url: 
     order: ${order-url}
 ```
 
-- order 서비스 Deployment.yml
+- order 서비스 Deployment.yml (Order/kubernetes/deployment.yml)
 ```yml
 apiVersion: apps/v1
 kind: Deployment
