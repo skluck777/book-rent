@@ -421,28 +421,34 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
   # orderInfo 서비스의 만화책 사용 신청(주문) 
   http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
+  D:\0개인평가\cartoon-rent> http localhost:8088/order/1
 ```  
-  ![order](https://user-images.githubusercontent.com/30138356/125385992-82afd500-e3d6-11eb-9f7a-64451dd0931f.PNG)
+![사용신청_order](https://user-images.githubusercontent.com/85722736/126602421-dfda512d-1a2b-478a-90c2-0f9247b2c2c2.JPG)
 ```
   # 주문 후 결제 상태 확인 ( payStatus = PAID )
   http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
+  http localhost:8088/payment/1
 ```
-  ![Payment 상태](https://user-images.githubusercontent.com/30138356/125385995-83486b80-e3d6-11eb-9bac-c9c8b175f72b.PNG)
+![주문후결제상태확인](https://user-images.githubusercontent.com/85722736/126602575-294f4f1a-fe45-4e57-83d8-fac1b5172d79.JPG)
 
 
   - PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
   ```
-  # 주문 후 결제 상태 확인 ( rentStatus = APPROVE )
-  http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
+  # 주문 후 렌트 상태 확인 ( rentStatus = APPROVE )
+  (삭제) http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
+  http localhost:8088/rent/2
   ```
   ![rent 상태](https://user-images.githubusercontent.com/30138356/125385996-83e10200-e3d6-11eb-94d5-ff5dad5431bf.PNG)
+  ![주무후렌트상태확인](https://user-images.githubusercontent.com/85722736/126604253-7e1b2291-4c7b-41a1-b695-1eb5cf5b19fb.JPG)
 
   - 이후 렌트승인 상태인 OrderId 에 대해 렌트신청 할 경우, 렌트(RENT) 상태로 변경되며 rent Event 가 카프카로 송출된다.
 ```
-# 렌트 신청 ( rentStatus = APPROVE 상태가 아니면 렌트 불가, 렌트 성공 시, rentStatus = RENT 로 변경 )
-  http PUT http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
+# 렌트 상태 ( rentStatus = APPROVE 상태가 아니면 렌트 불가, 렌트 성공 시, rentStatus = RENT 로 변경 )
+  (삭제)http PUT http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
+  http localhost:8088/rent/2
 ```
   ![rent 후 rent 상태](https://user-images.githubusercontent.com/30138356/125386338-11bced00-e3d7-11eb-9e10-0a1b051706fc.PNG)
+  ![렌트상태변경](https://user-images.githubusercontent.com/85722736/126605044-1eabe8d3-1d91-4f66-98ec-6d5cc73aab21.JPG)
 
 - 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다.(cartoon-rent/Stock/src/main/java/cartoonrent/PolicyHandler.java)
 ```
@@ -458,21 +464,26 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 - 사용 반납 작업을 통해, Correlation-key 연결을 검증한다
 
 ```
-# 사용 신청 
+# 사용 신청 (http POST localhost:8088/order customerId=11 time=3 orderId=20)
+
 ```
-![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
+(삭제)![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
+![Correlation-key-사용신청](https://user-images.githubusercontent.com/85722736/126606012-0d7c0dba-8acc-4d01-9870-7961d66c9661.JPG)
 ```
 # 렌트 신청 
 ```
 ![렌트처리](https://user-images.githubusercontent.com/30138356/125393661-52bafe80-e3e3-11eb-9cd7-62c22ff4b225.PNG)
+![Correlation-key-렌트신청](https://user-images.githubusercontent.com/85722736/126606093-1bf30759-2056-43f2-9edd-0fe3dbb57cc6.JPG)
 ```
 # 반납 처리
 ```
 ![반납처리](https://user-images.githubusercontent.com/30138356/125393660-52bafe80-e3e3-11eb-99d0-0e405e39bfc3.PNG)
+![Correlation-key-반납처리](https://user-images.githubusercontent.com/85722736/126606119-9a89ac28-e42d-444a-a0d3-bf166b8e5fcb.JPG)
 ```
 # 사용신청 내역과 렌트 내역 확인 ( 상태가 RETURN 으로 변경됨 ) 
 ```
 ![오더와 렌트상태](https://user-images.githubusercontent.com/30138356/125393657-5189d180-e3e3-11eb-91fb-3df9210e4a86.PNG)
+![Correlation-key-사용신청 렌트내역확인](https://user-images.githubusercontent.com/85722736/126606143-67d1c24d-b678-49e1-8f19-dc7a8babb172.JPG)
 
 ## 동기식 호출 과 Fallback 처리
 - 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
@@ -523,7 +534,7 @@ public interface PaymentInfoService {
   # 사용 신청 처리
   http POST localhost:8088/order customerId=11 time=3 orderId=20  # Fail
 ```
-![12](https://user-images.githubusercontent.com/30138356/125189944-aa3b5c00-e275-11eb-81c2-514085209b99.PNG)
+![동기호출실패](https://user-images.githubusercontent.com/85722736/126597327-3dd931e1-1c1f-4021-9744-511895f217da.JPG)
 ```
   # 결제서비스 재기동
   cd payment
@@ -532,7 +543,7 @@ public interface PaymentInfoService {
   # 사용 신청 처리
   http POST localhost:8088/order customerId=11 time=3 orderId=20  #Success
 ```
-![13](https://user-images.githubusercontent.com/30138356/125189975-cfc86580-e275-11eb-9b0c-dec97c2ede61.PNG)
+![결제_재기동](https://user-images.githubusercontent.com/85722736/126598371-7f417edf-32e0-4950-aaa1-e101997a8622.JPG)
 
 과도한 요청시에 서비스 장애 벌어질 수 있음에 유의
 
@@ -553,7 +564,8 @@ public interface PaymentInfoService {
 
     }
 ```
-렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다(cartoon-rent/Rent/src/main/java/cartoonrent/PolicyHandler.java):
+렌트승인 서비스에서는 결제완료 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다
+(cartoon-rent/Rent/src/main/java/cartoonrent/PolicyHandler.java):
 ``` JAVA
 public class PolicyHandler{
  ...
@@ -582,8 +594,9 @@ public class PolicyHandler{
 # 렌트승인 서비스(rent)를 잠시 내려놓음
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
-![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
-![10](https://user-images.githubusercontent.com/30138356/125189710-6e53c700-e274-11eb-9cdf-8c1c66830a35.PNG)
+(삭제)![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
+![비동기-렌트승인](https://user-images.githubusercontent.com/85722736/126607023-484100ed-e10c-4cd0-bc7d-787df788dadb.JPG)
+
 ```
 # 렌트승인 서비스 기동
 cd rent
@@ -591,7 +604,8 @@ mvn spring-boot:run
 
 # 렌트 상태 Update 확인
 ```
-![11](https://user-images.githubusercontent.com/30138356/125189746-9fcc9280-e274-11eb-8ede-260754fa66d9.PNG)
+(삭제)![11](https://user-images.githubusercontent.com/30138356/125189746-9fcc9280-e274-11eb-8ede-260754fa66d9.PNG)
+![비동기-렌트상태확인](https://user-images.githubusercontent.com/85722736/126607399-63d5d0f5-a554-454c-b7f7-4be5b0eb9c34.JPG)
 
 
 ## CQRS
@@ -870,20 +884,22 @@ public class DashboardViewHandler {
 ```
 CQRS에 대한 테스트는 아래와 같다
 주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
-![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
+(삭제)![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
+![CQRS_주문생성](https://user-images.githubusercontent.com/85722736/126742899-080b337c-de3b-44a9-8547-d3a8dd0976de.JPG)
 
 dashbaord CQRS 결과는 아래와 같다
 
 ![image](https://user-images.githubusercontent.com/22028798/125186621-5d03be00-e266-11eb-85a6-58cede9ce417.png) 
 
 ## 폴리글랏 퍼시스턴스
-- CQRS 를 위한 Dashboard 서비스만 DB를 구분하여 적용함. 인메모리 DB인 hsqldb 사용.
+- CQRS 를 위한 Dashboard 서비스만 DB를 구분하여 적용함. 인메모리 DB인 hsqldb 사용. (Dashboard\pom.xml)
 ```xml
 		<!-- <dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency> -->
+
 
 		<dependency>
 		    <groupId>org.hsqldb</groupId>
