@@ -1116,7 +1116,7 @@ api:
     order: ${order-url}
 ```
 
-- order 서비스 order.yml
+- order 서비스 Deployment.yml
 ```yml
 apiVersion: apps/v1
 kind: Deployment
@@ -1127,7 +1127,7 @@ metadata:
 spec:
   -- 생략 --
           env:
-            - name: ORDER-URL
+            - name: order-url  
               valueFrom:
                 configMapKeyRef:
                   name: order-configmap
