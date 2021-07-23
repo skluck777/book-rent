@@ -884,7 +884,7 @@ public class DashboardViewHandler {
 ```
 CQRS에 대한 테스트는 아래와 같다
 주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
-(삭제)![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
+ (삭제)![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
 ![CQRS_주문생성](https://user-images.githubusercontent.com/85722736/126742899-080b337c-de3b-44a9-8547-d3a8dd0976de.JPG)
 
 dashbaord CQRS 결과는 아래와 같다
@@ -910,7 +910,7 @@ dashbaord CQRS 결과는 아래와 같다
 ```
 - 변경 후에도 정상 구동됨을 확인
 ![구동확인1](https://user-images.githubusercontent.com/30138356/125391898-2782e000-e3e0-11eb-8f50-5c1a3ff963f8.PNG)
-![구동확인](https://user-images.githubusercontent.com/30138356/125391896-2651b300-e3e0-11eb-9be6-2410b0e51e49.PNG)
+![폴리그랏-구동확인](https://user-images.githubusercontent.com/85722736/126744320-b17288c5-d9c3-4e9a-a480-43c1364a6d09.JPG)
 
 # 운영
 
