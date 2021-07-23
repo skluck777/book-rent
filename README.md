@@ -464,7 +464,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 - 사용 반납 작업을 통해, Correlation-key 연결을 검증한다
 
 ```
-# 사용 신청 (http POST localhost:8088/order customerId=11 orderId=20)
+# 사용 신청 (http POST localhost:8088/order customerId=11 time=3 orderId=20)
 
 ```
 (삭제)![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
