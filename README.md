@@ -1161,7 +1161,7 @@ hystrix:
       execution.isolation.thread.timeoutInMilliseconds: 610
 ```
 
-- 피호출 서비스(결제:payment) 의 부하 처리
+- 피호출 서비스(결제:payment) 의 부하 처리 (Payment/src/main/java/cartoonrent/PaymentInfo.java) (주석해제)
 ```JAVA
     @PostPersist
     public void onPostPersist(){
