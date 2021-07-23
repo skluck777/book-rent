@@ -884,7 +884,8 @@ public class DashboardViewHandler {
 ```
 CQRS에 대한 테스트는 아래와 같다
 주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
-![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
+(삭제)![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
+![CQRS_주문생성](https://user-images.githubusercontent.com/85722736/126742899-080b337c-de3b-44a9-8547-d3a8dd0976de.JPG)
 
 dashbaord CQRS 결과는 아래와 같다
 
@@ -898,6 +899,7 @@ dashbaord CQRS 결과는 아래와 같다
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency> -->
+
 
 		<dependency>
 		    <groupId>org.hsqldb</groupId>
