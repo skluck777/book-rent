@@ -426,7 +426,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ![사용신청_order](https://user-images.githubusercontent.com/85722736/126602421-dfda512d-1a2b-478a-90c2-0f9247b2c2c2.JPG)
 ```
   # 주문 후 결제 상태 확인 ( payStatus = PAID )
-  http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
+  (삭제)http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
   http localhost:8088/payment/1
 ```
 ![주문후결제상태확인](https://user-images.githubusercontent.com/85722736/126602575-294f4f1a-fe45-4e57-83d8-fac1b5172d79.JPG)
@@ -438,7 +438,6 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   (삭제) http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
   http localhost:8088/rent/2
   ```
-  ![rent 상태](https://user-images.githubusercontent.com/30138356/125385996-83e10200-e3d6-11eb-94d5-ff5dad5431bf.PNG)
   ![주무후렌트상태확인](https://user-images.githubusercontent.com/85722736/126604253-7e1b2291-4c7b-41a1-b695-1eb5cf5b19fb.JPG)
 
   - 이후 렌트승인 상태인 OrderId 에 대해 렌트신청 할 경우, 렌트(RENT) 상태로 변경되며 rent Event 가 카프카로 송출된다.
@@ -447,7 +446,6 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   (삭제)http PUT http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
   http localhost:8088/rent/2
 ```
-  ![rent 후 rent 상태](https://user-images.githubusercontent.com/30138356/125386338-11bced00-e3d7-11eb-9e10-0a1b051706fc.PNG)
   ![렌트상태변경](https://user-images.githubusercontent.com/85722736/126605044-1eabe8d3-1d91-4f66-98ec-6d5cc73aab21.JPG)
 
 - 재고(stock) 서비스에서는 해당 rent Event 수신 후, 재고차감 이력을 기록한다.(cartoon-rent/Stock/src/main/java/cartoonrent/PolicyHandler.java)
@@ -456,7 +454,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   ```
   ![재고이력소스](https://user-images.githubusercontent.com/30138356/125386433-40d35e80-e3d7-11eb-81df-06e1ddf8d29d.PNG)
 ```
-  # 재고 차감 내역 콘솔에서 확인 >> ?? 어디에서
+  # 재고 차감 내역 콘솔에서 확인
 ```
   ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
 
@@ -467,22 +465,18 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 # 사용 신청 (http POST localhost:8088/order customerId=11 time=3 orderId=20)
 
 ```
-(삭제)![사용신청된Order](https://user-images.githubusercontent.com/30138356/125393664-53539500-e3e3-11eb-9d64-ee001b5ab887.PNG)
 ![Correlation-key-사용신청](https://user-images.githubusercontent.com/85722736/126606012-0d7c0dba-8acc-4d01-9870-7961d66c9661.JPG)
 ```
 # 렌트 신청 
 ```
-![렌트처리](https://user-images.githubusercontent.com/30138356/125393661-52bafe80-e3e3-11eb-9cd7-62c22ff4b225.PNG)
 ![Correlation-key-렌트신청](https://user-images.githubusercontent.com/85722736/126606093-1bf30759-2056-43f2-9edd-0fe3dbb57cc6.JPG)
 ```
 # 반납 처리
 ```
-![반납처리](https://user-images.githubusercontent.com/30138356/125393660-52bafe80-e3e3-11eb-99d0-0e405e39bfc3.PNG)
 ![Correlation-key-반납처리](https://user-images.githubusercontent.com/85722736/126606119-9a89ac28-e42d-444a-a0d3-bf166b8e5fcb.JPG)
 ```
 # 사용신청 내역과 렌트 내역 확인 ( 상태가 RETURN 으로 변경됨 ) 
 ```
-![오더와 렌트상태](https://user-images.githubusercontent.com/30138356/125393657-5189d180-e3e3-11eb-91fb-3df9210e4a86.PNG)
 ![Correlation-key-사용신청 렌트내역확인](https://user-images.githubusercontent.com/85722736/126606143-67d1c24d-b678-49e1-8f19-dc7a8babb172.JPG)
 
 ## 동기식 호출 과 Fallback 처리
@@ -594,7 +588,6 @@ public class PolicyHandler{
 # 렌트승인 서비스(rent)를 잠시 내려놓음
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
-(삭제)![9](https://user-images.githubusercontent.com/30138356/125189677-3fd5ec00-e274-11eb-9aee-f68b40516ce7.PNG)
 ![비동기-렌트승인](https://user-images.githubusercontent.com/85722736/126607023-484100ed-e10c-4cd0-bc7d-787df788dadb.JPG)
 
 ```
@@ -604,20 +597,15 @@ mvn spring-boot:run
 
 # 렌트 상태 Update 확인
 ```
-(삭제)![11](https://user-images.githubusercontent.com/30138356/125189746-9fcc9280-e274-11eb-8ede-260754fa66d9.PNG)
 ![비동기-렌트상태확인](https://user-images.githubusercontent.com/85722736/126607399-63d5d0f5-a554-454c-b7f7-4be5b0eb9c34.JPG)
 
 
 ## CQRS
 
 - CQRS: Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하도록 구현한다
-
 주문 / 결제 / 렌트 서비스의 전체 현황 및 상태 조회를 제공하기 위해 dashboard를 구성하였다.
-
 dashboard의 어트리뷰트는 다음과 같으며
-
 ![image](https://user-images.githubusercontent.com/22028798/125186287-79066000-e264-11eb-94a6-ee4a85aa8851.png)
-
 ordered, paymentApproved, canceled, returned, paymentCanceled 이벤트에 따라 주문상태, 반납상태, 취소상태를 업데이트 하는 모델링을 진행하였다.
 
 자동생성된 소스 샘플은 아래와 같다
@@ -884,7 +872,6 @@ public class DashboardViewHandler {
 ```
 CQRS에 대한 테스트는 아래와 같다
 주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
- (삭제)![image](https://user-images.githubusercontent.com/22028798/125186608-465d6700-e266-11eb-863e-3403c96f5782.png)
 ![CQRS_주문생성](https://user-images.githubusercontent.com/85722736/126742899-080b337c-de3b-44a9-8547-d3a8dd0976de.JPG)
 
 dashbaord CQRS 결과는 아래와 같다
@@ -908,7 +895,7 @@ dashbaord CQRS 결과는 아래와 같다
 		    <scope>runtime</scope>
 		</dependency>
 ```
-- 변경 후에도 정상 구동됨을 확인
+- 변경 후에도 정상 구동됨을 확인 (체크)
 ![구동확인1](https://user-images.githubusercontent.com/30138356/125391898-2782e000-e3e0-11eb-8f50-5c1a3ff963f8.PNG)
 ![폴리그랏-구동확인](https://user-images.githubusercontent.com/85722736/126744320-b17288c5-d9c3-4e9a-a480-43c1364a6d09.JPG)
 
