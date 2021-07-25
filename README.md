@@ -1062,6 +1062,7 @@ data:
 ![image](https://user-images.githubusercontent.com/22028798/125400543-fc52bd80-e3ec-11eb-8dc6-1a8ac53ef31d.png)
 
 - siege로 부하 시작 -> 가용률 100% 확인
+- siege 설정 방법 > 설치해야 하느지? 아니면???
 
 ![image](https://user-images.githubusercontent.com/22028798/125400628-18565f00-e3ed-11eb-9c9c-ea4c64c6717d.png)
 
