@@ -217,6 +217,7 @@
 ```
 
 ## 게이트웨이 적용  
+- API GateWay를 통하여 마이크로 서비스들의 진입점을 통일할 수 있다. 다음과 같이 GateWay를 적용하였다.
 - cartoon-rent/gateway/src/main/resources/application.yml
 - controller로 구현 > cartoon-rent/Order/src/main/java/cartoonrent/OrderInfoController.java
 
