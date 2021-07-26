@@ -438,14 +438,14 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   - PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
   ```
   # 주문 후 렌트 상태 확인 ( rentStatus = APPROVE )
-  http localhost:8088/rent/2
+  http localhost:8088/rent/1
   ```
  ![3 주문후렌트상태확인](https://user-images.githubusercontent.com/85722736/126927400-ceb068f7-5d6d-4da2-b695-dbe7f222e21a.JPG)
   - 이후 렌트승인 상태인 OrderId 에 대해 렌트신청 할 경우, 렌트(RENT) 상태로 변경되며 rent Event 가 카프카로 송출된다.
 ```
 # 렌트 상태 ( rentStatus = APPROVE 상태가 아니면 렌트 불가, 렌트 성공 시, rentStatus = RENT 로 변경 )
   (삭제)http PUT http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/rent/100
-  http localhost:8088/rent/2
+  http PUT localhost:8088/rent/1
 ```
   ![렌트상태변경](https://user-images.githubusercontent.com/85722736/126605044-1eabe8d3-1d91-4f66-98ec-6d5cc73aab21.JPG)
 
