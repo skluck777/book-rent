@@ -603,8 +603,10 @@ mvn spring-boot:run
 
 - CQRS: Materialized View 를 구현하여, 타 마이크로서비스의 데이터 원본에 접근없이(Composite 서비스나 조인SQL 등 없이) 도 내 서비스의 화면 구성과 잦은 조회가 가능하도록 구현한다.
 - 주문 / 결제 / 렌트 서비스의 전체 현황 및 상태 조회를 제공하기 위해 dashboard를 구성하였다.
-dashboard의 어트리뷰트는 다음과 같으며
-![image](https://user-images.githubusercontent.com/22028798/125186287-79066000-e264-11eb-94a6-ee4a85aa8851.png)
+dashboard의 속성은 다음과 같으며
+
+![12 CQRS](https://user-images.githubusercontent.com/85722736/126934783-9aa83442-16e3-4aa5-9be6-8b20c3dada5c.JPG)
+
 ordered, paymentApproved, canceled, returned, paymentCanceled 이벤트에 따라 주문상태, 반납상태, 취소상태를 업데이트 하는 모델링을 진행하였다.
 
 자동생성된 소스 샘플은 아래와 같다
