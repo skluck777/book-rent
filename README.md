@@ -587,7 +587,7 @@ public class PolicyHandler{
 # 렌트승인 서비스(rent)를 잠시 내려놓음
 # 사용신청 처리 후 사용신청 및 결제 처리 Event 진행확인
 ```
-![비동기-렌트승인](https://user-images.githubusercontent.com/85722736/126607023-484100ed-e10c-4cd0-bc7d-787df788dadb.JPG)
+![11 비동기호출](https://user-images.githubusercontent.com/85722736/126934356-723b1d7e-546e-4882-a900-5606308a7e17.JPG)
 
 ```
 # 렌트승인 서비스 기동
@@ -596,7 +596,7 @@ mvn spring-boot:run
 
 # 렌트 상태 Update 확인
 ```
-![비동기-렌트상태확인](https://user-images.githubusercontent.com/85722736/126607399-63d5d0f5-a554-454c-b7f7-4be5b0eb9c34.JPG)
+![11 비동기호출-렌트승인](https://user-images.githubusercontent.com/85722736/126934372-fd5f419e-63e1-4346-a863-0a3bc2e3d7c6.JPG)
 
 
 ## CQRS
