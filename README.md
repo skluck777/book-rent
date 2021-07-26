@@ -212,6 +212,9 @@
   cd stock
   mvn spring-boot:run 
 
+  cd dashboard
+  mvn spring-boot:run
+  
   cd gateway
   mvn spring-boot:run
 ```
