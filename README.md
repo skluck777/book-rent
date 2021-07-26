@@ -1053,7 +1053,7 @@ data:
 ## 무정지 재배포(Readiness Probe)
 - 현재 정상적으로 동작중인 상황 확인
 
-![image](https://user-images.githubusercontent.com/22028798/125400383-c6add480-e3ec-11eb-8e0b-aeddf0a0c8fb.png)
+![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
 
 - cartoon-rent\kubernetes\cartoonrent\order.yml 파일에 Readiness Probe 부분 설정(주석해제)
 
