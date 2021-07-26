@@ -873,11 +873,11 @@ public class DashboardViewHandler {
 ```
 CQRS에 대한 테스트는 아래와 같다
 주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
-![CQRS_주문생성](https://user-images.githubusercontent.com/85722736/126742899-080b337c-de3b-44a9-8547-d3a8dd0976de.JPG)
+![12 CQRS테스트](https://user-images.githubusercontent.com/85722736/126935916-6f3cc304-6dfe-4fb8-ac79-bf1341ce2d56.JPG)
 
 dashbaord CQRS 결과는 아래와 같다
+![13 CQRS결과](https://user-images.githubusercontent.com/85722736/126935939-6f85e488-70a1-4ab6-bb10-640cbfd39709.JPG)
 
-![image](https://user-images.githubusercontent.com/22028798/125186621-5d03be00-e266-11eb-85a6-58cede9ce417.png) 
 
 ## 폴리글랏 퍼시스턴스
 - CQRS 를 위한 Dashboard 서비스만 DB를 구분하여 적용함. 인메모리 DB인 hsqldb 사용. (Dashboard\pom.xml)
