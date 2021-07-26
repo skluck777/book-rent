@@ -425,10 +425,10 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
   - 사용신청(order) 발생 시, req/res 방식으로 결제(payment) 서비스를 호출하고 결제 완료 후 발생하는 PayApproved Event 가 카프카로 송출된다. 
 ```
   # orderInfo 서비스의 만화책 사용 신청(주문) 
-  http POST http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/order orderId=100 customerId=99
-  D:\0개인평가\cartoon-rent> http localhost:8088/order/1
+  http POST http://a998edc0c4f764ee8a64ea94852b9085-1114332187.ap-southeast-1.elb.amazonaws.com:8088/order customerId=1 time=3 orderId=1
+  http POST localhost:8088/order customerId=1 time=3 orderId=1
 ```  
-![사용신청_order](https://user-images.githubusercontent.com/85722736/126602421-dfda512d-1a2b-478a-90c2-0f9247b2c2c2.JPG)
+![1 사용신청](https://user-images.githubusercontent.com/85722736/126926728-485d514b-606c-4cc2-856d-09653ff1bb4b.JPG)
 ```
   # 주문 후 결제 상태 확인 ( payStatus = PAID )
   (삭제)http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
