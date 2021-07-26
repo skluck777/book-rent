@@ -1173,6 +1173,7 @@ hystrix:
 ```
 
 - siege 툴을 통한 서킷 브레이커 동작 확인
+
 ![19 서킷브레이크](https://user-images.githubusercontent.com/85722736/127002014-0b6e2853-a795-47e3-a19b-03964e7a53ec.JPG)
 
 ## 오토스케일 아웃
