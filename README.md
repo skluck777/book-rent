@@ -899,7 +899,7 @@ dashbaord CQRS 결과는 아래와 같다.
 ```
 - 변경 후에도 정상 구동됨을 확인 (체크)
 ![구동확인1](https://user-images.githubusercontent.com/30138356/125391898-2782e000-e3e0-11eb-8f50-5c1a3ff963f8.PNG)
-![폴리그랏-구동확인](https://user-images.githubusercontent.com/85722736/126744320-b17288c5-d9c3-4e9a-a480-43c1364a6d09.JPG)
+
 
 # 운영
 
