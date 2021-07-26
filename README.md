@@ -1050,6 +1050,22 @@ data:
 ![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
 
 
+## Self-healing (Liveness Probe)
+- deployment.yml에 정상 적용되어 있는 livenessProbe (cartoon-rent\kubernetes\cartoonrent\deployment.yml)
+
+![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
+
+- 정상작동 중 확인
+
+![16 self-Healing(liveness)정상확인](https://user-images.githubusercontent.com/85722736/126961790-e9a62f05-e1db-4f71-bfb9-b38eb5876807.JPG)
+
+- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인(렌트)
+
+![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
+
+![16 self-Healing(liveness)재기동(렌트)확인_1](https://user-images.githubusercontent.com/85722736/126962317-0b9f50ce-c358-4b52-b455-4cdd682ba89e.JPG)
+
+
 ## 무정지 재배포(Readiness Probe)
 - 현재 정상적으로 동작중인 상황 확인
 
@@ -1068,21 +1084,6 @@ data:
 
 ![image](https://user-images.githubusercontent.com/22028798/125400628-18565f00-e3ed-11eb-9c9c-ea4c64c6717d.png)
 
-
-## Self-healing (Liveness Probe)
-- deployment.yml에 정상 적용되어 있는 livenessProbe (cartoon-rent\kubernetes\cartoonrent\deployment.yml)
-
-![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
-
-- 정상작동 중 확인
-
-![16 self-Healing(liveness)정상확인](https://user-images.githubusercontent.com/85722736/126961790-e9a62f05-e1db-4f71-bfb9-b38eb5876807.JPG)
-
-- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인(렌트)
-
-![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
-
-![16 self-Healing(liveness)재기동(렌트)확인_1](https://user-images.githubusercontent.com/85722736/126962317-0b9f50ce-c358-4b52-b455-4cdd682ba89e.JPG)
 
 
 ## Config Map
