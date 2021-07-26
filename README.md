@@ -318,7 +318,6 @@ spec:
 
 ```
 - 적용 이미지
-(삭제)![게이트웨이](https://user-images.githubusercontent.com/30138356/125386847-edaddb80-e3d7-11eb-9738-5c8904b3a28e.PNG)
 ![LoadBalancer 적용](https://user-images.githubusercontent.com/85722736/126922911-f1017501-1ad9-436b-bccc-5b85be6a1df1.JPG)
 
 
