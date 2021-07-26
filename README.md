@@ -1173,8 +1173,7 @@ hystrix:
 ```
 
 - siege 툴을 통한 서킷 브레이커 동작 확인
-![image](https://user-images.githubusercontent.com/30138356/125381495-f6e67a80-e3ce-11eb-85fc-d6b454018209.PNG)
-![image](https://user-images.githubusercontent.com/30138356/125381513-006fe280-e3cf-11eb-9323-fe7775b8b1b4.PNG)
+![19 서킷브레이크](https://user-images.githubusercontent.com/85722736/127002014-0b6e2853-a795-47e3-a19b-03964e7a53ec.JPG)
 
 ## 오토스케일 아웃
 - 결제 서비스에 대한 Replica를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 15%를 넘어서면 Replica 를 10개까지 늘려준다.
