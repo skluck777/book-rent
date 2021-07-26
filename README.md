@@ -1082,7 +1082,7 @@ data:
 
 ![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
 
-![16 self-Healing(liveness)재기동(렌트)확인](https://user-images.githubusercontent.com/85722736/126961839-501bfb11-f6d9-4bbb-9614-bc0cc7bc5ad3.JPG)
+![16 self-Healing(liveness)재기동(렌트)확인_1](https://user-images.githubusercontent.com/85722736/126962317-0b9f50ce-c358-4b52-b455-4cdd682ba89e.JPG)
 
 
 ## Config Map
