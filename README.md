@@ -1050,42 +1050,6 @@ data:
 ![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
 
 
-## Self-healing (Liveness Probe)
-- deployment.yml에 정상 적용되어 있는 livenessProbe (cartoon-rent\kubernetes\cartoonrent\deployment.yml)
-
-![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
-
-- 정상작동 중 확인
-
-![16 self-Healing(liveness)정상확인](https://user-images.githubusercontent.com/85722736/126961790-e9a62f05-e1db-4f71-bfb9-b38eb5876807.JPG)
-
-- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인(렌트)
-
-![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
-
-![16 self-Healing(liveness)재기동(렌트)확인_1](https://user-images.githubusercontent.com/85722736/126962317-0b9f50ce-c358-4b52-b455-4cdd682ba89e.JPG)
-
-
-## 무정지 재배포(Readiness Probe)
-- 현재 정상적으로 동작중인 상황 확인
-
-![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
-
-- cartoon-rent\kubernetes\cartoonrent\order.yml 파일에 Readiness Probe 부분 설정(주석해제)
-
-![image](https://user-images.githubusercontent.com/22028798/125400485-e5ac6680-e3ec-11eb-92ca-96c3abe91876.png)
-
-- 디플로이 시작
-
-![image](https://user-images.githubusercontent.com/22028798/125400543-fc52bd80-e3ec-11eb-8dc6-1a8ac53ef31d.png)
-
-- siege로 부하 시작 -> 가용률 100% 확인
-- siege 설정 방법 > siege pod 생성 > ~~ bin/bash로 파트 접속 > 부하 주면서 test
-
-![image](https://user-images.githubusercontent.com/22028798/125400628-18565f00-e3ed-11eb-9c9c-ea4c64c6717d.png)
-
-
-
 ## Config Map
 
 - 변경 가능성이 있는 설정을 ConfigMap을 사용하여 관리  
@@ -1132,9 +1096,45 @@ metadata:
 data:
   order-url: payment:8080
 ```
-
 - 적용 후 상세내역 확인 가능
 ![14 configMap적용](https://user-images.githubusercontent.com/85722736/126941648-57a880ef-827e-4c48-a69a-d5615450c5b5.JPG)
+
+
+
+## Self-healing (Liveness Probe)
+- deployment.yml에 정상 적용되어 있는 livenessProbe (cartoon-rent\kubernetes\cartoonrent\deployment.yml)
+
+![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
+
+- 정상작동 중 확인
+
+![16 self-Healing(liveness)정상확인](https://user-images.githubusercontent.com/85722736/126961790-e9a62f05-e1db-4f71-bfb9-b38eb5876807.JPG)
+
+- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인(렌트)
+
+![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
+
+![16 self-Healing(liveness)재기동(렌트)확인_1](https://user-images.githubusercontent.com/85722736/126962317-0b9f50ce-c358-4b52-b455-4cdd682ba89e.JPG)
+
+
+## 무정지 재배포(Readiness Probe)
+- 현재 정상적으로 동작중인 상황 확인
+
+![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
+
+- cartoon-rent\kubernetes\cartoonrent\order.yml 파일에 Readiness Probe 부분 설정(주석해제)
+
+![image](https://user-images.githubusercontent.com/22028798/125400485-e5ac6680-e3ec-11eb-92ca-96c3abe91876.png)
+
+- 디플로이 시작
+
+![image](https://user-images.githubusercontent.com/22028798/125400543-fc52bd80-e3ec-11eb-8dc6-1a8ac53ef31d.png)
+
+- siege로 부하 시작 -> 가용률 100% 확인
+- siege 설정 방법 > siege pod 생성 > ~~ bin/bash로 파트 접속 > 부하 주면서 test
+
+![image](https://user-images.githubusercontent.com/22028798/125400628-18565f00-e3ed-11eb-9c9c-ea4c64c6717d.png)
+
 
 
 ## Circuit Breaker
