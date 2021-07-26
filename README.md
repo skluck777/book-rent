@@ -912,22 +912,22 @@ dashbaord CQRS 결과는 아래와 같다.
 # order
 cd Order
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:v1 .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:v1
+docker build -t 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-order:v1 .
+docker push 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-order:v1
 
 # payment
 cd ..
 cd Payment
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:v1 .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:v1
+docker build -t 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-payment:v1 .
+docker push 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-payment:v1
 
 # rent
 cd ..
 cd Rent
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:v1 .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:v1
+docker build -t 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-rent:v1 .
+docker push 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-rent:v1
 
 # stock
 cd ..
@@ -947,8 +947,8 @@ docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:v
 cd ..
 cd gateway
 mvn package
-docker build -t 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:v1 .
-docker push 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:v1
+docker build -t 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-stock:v1 .
+docker push 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-stock:v1
 ```
 
 - Kubernetes Deploy 및 Service 생성
@@ -984,7 +984,7 @@ spec:
     spec:
       containers:
         - name: order
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
+          image: 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-order:v1
           ports:
             - containerPort: 8080
           env:
