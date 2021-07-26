@@ -1047,7 +1047,7 @@ data:
 ```
 
 - Deploy 완료
-![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
+![15 Deploy완료_1](https://user-images.githubusercontent.com/85722736/127074046-9b145d48-aec3-49a9-ae4c-e412f1924ede.JPG)
 
 
 ## Config Map
