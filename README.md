@@ -1132,7 +1132,7 @@ data:
 
 - siege로 부하 시작 -> 가용률 100% 확인
 
-![18 무정지 재배포(Readiness Probe)부하100](https://user-images.githubusercontent.com/85722736/126967320-4b335538-1901-47de-9ca8-c4db86aff907.JPG)
+![18 무정지 재배포(Readiness Probe)부하100_1](https://user-images.githubusercontent.com/85722736/126981254-d355bb19-e126-4413-9a7c-522d69aaa4b6.JPG)
 
 
 
