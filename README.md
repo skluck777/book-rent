@@ -1132,7 +1132,7 @@ data:
 ```
 
 - 적용 후 상세내역 확인 가능
-![KakaoTalk_20210713_132118829](https://user-images.githubusercontent.com/30138356/125390117-4469e400-e3dd-11eb-991e-a5731893f401.png)
+![14 configMap적용](https://user-images.githubusercontent.com/85722736/126941648-57a880ef-827e-4c48-a69a-d5615450c5b5.JPG)
 
 
 ## Circuit Breaker
