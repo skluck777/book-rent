@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: order
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-order:latest
+          image: 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-order:v1
           ports:
             - containerPort: 8080
           env:
@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
         - name: stock
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-stock:latest
+          image: 8879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-stock:v1
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -104,7 +104,7 @@ spec:
     spec:
       containers:
         - name: payment
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-payment:latest
+          image: 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-payment:v1
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -144,7 +144,7 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-dashboard:latest
+          image: 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-dashboard:v1
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -184,7 +184,7 @@ spec:
     spec:
       containers:
         - name: rent
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-rent:latest
+          image: 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-rent:v1
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -226,7 +226,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: 879772956301.dkr.ecr.ap-northeast-2.amazonaws.com/user01-gateway:latest
+          image: 879772956301.dkr.ecr.ap-southeast-1.amazonaws.com/user15-gateway:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
