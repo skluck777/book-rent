@@ -525,18 +525,18 @@ public interface PaymentInfoService {
   # 결제(paymentSystem) 서비스를 잠시 내려놓음
 
   # 사용 신청 처리
-  http POST localhost:8088/order customerId=11 time=3 orderId=20  # Fail
+  http POST localhost:8088/order customerId=7 time=3 orderId=7  # Fail
 ```
-![동기호출실패](https://user-images.githubusercontent.com/85722736/126597327-3dd931e1-1c1f-4021-9744-511895f217da.JPG)
+![10 동기호출,fallbalck실패](https://user-images.githubusercontent.com/85722736/126933749-99f45b09-7ba9-4eb0-bc68-7276ee66d877.JPG)
 ```
   # 결제서비스 재기동
   cd payment
   mvn spring-boot:run
 
   # 사용 신청 처리
-  http POST localhost:8088/order customerId=11 time=3 orderId=20  #Success
+  http POST localhost:8088/order customerId=7 time=3 orderId=7  #Success
 ```
-![결제_재기동](https://user-images.githubusercontent.com/85722736/126598371-7f417edf-32e0-4950-aaa1-e101997a8622.JPG)
+![10 동기호출,fallbalck성공](https://user-images.githubusercontent.com/85722736/126933779-e55d9bf9-70b8-4bd9-abc5-93a6558ff841.JPG)
 
 과도한 요청시에 서비스 장애 벌어질 수 있음에 유의
 
