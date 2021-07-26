@@ -1070,7 +1070,7 @@ data:
 
 
 ## Self-healing (Liveness Probe)
-- deployment.yml에 정상 적용되어 있는 livenessProbe
+- deployment.yml에 정상 적용되어 있는 livenessProbe (cartoon-rent\kubernetes\cartoonrent\deployment.yml)
 
 ![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
 
