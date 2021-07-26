@@ -1075,13 +1075,12 @@ data:
 ![image](https://user-images.githubusercontent.com/22028798/125394269-69ae2080-e3e4-11eb-9611-3a79a072cdfc.png)
 
 - 정상작동 중 확인
+![16 self-Healing(liveness)정상확인](https://user-images.githubusercontent.com/85722736/126961790-e9a62f05-e1db-4f71-bfb9-b38eb5876807.JPG)
 
-![image](https://user-images.githubusercontent.com/22028798/125394378-906c5700-e3e4-11eb-9728-ed329ef46efc.png)
-
-- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인
-
+- 포트 및 경로 잘못된 값으로 변경 후 retry 시도 확인(렌트)
 ![image](https://user-images.githubusercontent.com/22028798/125394475-b1cd4300-e3e4-11eb-8c80-d953e29bed0c.png)
-![image](https://user-images.githubusercontent.com/22028798/125394858-4c2d8680-e3e5-11eb-98d6-3a7e3409bb6e.png)
+
+![16 self-Healing(liveness)재기동(렌트)확인](https://user-images.githubusercontent.com/85722736/126961839-501bfb11-f6d9-4bbb-9614-bc0cc7bc5ad3.JPG)
 
 
 ## Config Map
