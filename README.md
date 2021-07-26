@@ -1181,7 +1181,7 @@ hystrix:
 
 - (오토스케일 미적용 시) siege -c10 -t105s -r10 -v --content-type "application/json" 'http://gateway:8080/order POST {"orderId" : 1, "customerId": 1}'
 
-![KakaoTalk_20210713_115034531](https://user-images.githubusercontent.com/30138356/125382776-43cb5080-e3d1-11eb-946e-381e02d18f79.png)
+![20 오토스케일미적용](https://user-images.githubusercontent.com/85722736/127004658-407e1eef-de59-494e-8cbc-a6cedd9b84ce.JPG)
 
 - (오토스케일 적용) kubectl autoscale deploy payment --min=1 --max=10 --cpu-percent=15
 ![KakaoTalk_20210713_114857158](https://user-images.githubusercontent.com/30138356/125382849-69585a00-e3d1-11eb-95cf-cf69d29b5a44.png)
