@@ -1128,12 +1128,11 @@ data:
 
 - 디플로이 시작
 
-![image](https://user-images.githubusercontent.com/22028798/125400543-fc52bd80-e3ec-11eb-8dc6-1a8ac53ef31d.png)
+![17 무정지 재배포(Readiness Probe)디플로이](https://user-images.githubusercontent.com/85722736/126967293-8e4d53e7-c8e9-4771-b2db-b3fb06966117.JPG)
 
 - siege로 부하 시작 -> 가용률 100% 확인
-- siege 설정 방법 > siege pod 생성 > ~~ bin/bash로 파트 접속 > 부하 주면서 test
 
-![image](https://user-images.githubusercontent.com/22028798/125400628-18565f00-e3ed-11eb-9c9c-ea4c64c6717d.png)
+![18 무정지 재배포(Readiness Probe)부하100](https://user-images.githubusercontent.com/85722736/126967320-4b335538-1901-47de-9ca8-c4db86aff907.JPG)
 
 
 
