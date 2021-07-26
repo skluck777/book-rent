@@ -1131,6 +1131,7 @@ data:
 ![17 무정지 재배포(Readiness Probe)디플로이](https://user-images.githubusercontent.com/85722736/126967293-8e4d53e7-c8e9-4771-b2db-b3fb06966117.JPG)
 
 - siege로 부하 시작 -> 가용률 100% 확인
+- siege pod생성 후 부하 Test 
 
 ![18 무정지 재배포(Readiness Probe)부하100_1](https://user-images.githubusercontent.com/85722736/126981254-d355bb19-e126-4413-9a7c-522d69aaa4b6.JPG)
 
