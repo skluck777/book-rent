@@ -431,12 +431,10 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ![1 사용신청](https://user-images.githubusercontent.com/85722736/126926728-485d514b-606c-4cc2-856d-09653ff1bb4b.JPG)
 ```
   # 주문 후 결제 상태 확인 ( payStatus = PAID )
-  (삭제)http http://a3649a0c9c28b482c85ab06fe0a8a7f4-1255737767.ap-northeast-2.elb.amazonaws.com:8080/payment/1
+  http POST http://a998edc0c4f764ee8a64ea94852b9085-1114332187.ap-southeast-1.elb.amazonaws.com:8088/payment/1
   http localhost:8088/payment/1
 ```
-![주문후결제상태확인](https://user-images.githubusercontent.com/85722736/126602575-294f4f1a-fe45-4e57-83d8-fac1b5172d79.JPG)
-
-
+![2 주문후결제상태확인](https://user-images.githubusercontent.com/85722736/126927178-abe8e512-36f8-4a7f-898f-9a4841edc667.JPG)
   - PayApproved 를 수신한 렌트(rent) 서비스가 전달받은 OrderId 로 렌트승인(APPROVE) 상태인 데이터를 생성한다.
   ```
   # 주문 후 렌트 상태 확인 ( rentStatus = APPROVE )
