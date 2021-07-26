@@ -876,6 +876,7 @@ CQRS에 대한 테스트는 아래와 같다
 ![12 CQRS테스트](https://user-images.githubusercontent.com/85722736/126935916-6f3cc304-6dfe-4fb8-ac79-bf1341ce2d56.JPG)
 
 dashbaord CQRS 결과는 아래와 같다.
+
 ![13 CQRS결과](https://user-images.githubusercontent.com/85722736/126935939-6f85e488-70a1-4ab6-bb10-640cbfd39709.JPG)
 
 
