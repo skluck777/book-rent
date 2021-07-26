@@ -468,15 +468,15 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
 # 렌트 신청 
 ```
-![Correlation-key-렌트신청](https://user-images.githubusercontent.com/85722736/126606093-1bf30759-2056-43f2-9edd-0fe3dbb57cc6.JPG)
+![7 correlation-key렌트신청](https://user-images.githubusercontent.com/85722736/126933402-f5f80321-10d8-47b5-9874-454f92d7aef3.JPG)
 ```
 # 반납 처리
 ```
-![Correlation-key-반납처리](https://user-images.githubusercontent.com/85722736/126606119-9a89ac28-e42d-444a-a0d3-bf166b8e5fcb.JPG)
+![8 correlation-key반납신청](https://user-images.githubusercontent.com/85722736/126933418-de205d72-d685-4c5b-a509-9a1cc23b5de5.JPG)
 ```
 # 사용신청 내역과 렌트 내역 확인 ( 상태가 RETURN 으로 변경됨 ) 
 ```
-![Correlation-key-사용신청 렌트내역확인](https://user-images.githubusercontent.com/85722736/126606143-67d1c24d-b678-49e1-8f19-dc7a8babb172.JPG)
+![9 correlation-key내역확인](https://user-images.githubusercontent.com/85722736/126933434-b7668887-ab58-40cd-891c-91af8219a5e3.JPG)
 
 ## 동기식 호출 과 Fallback 처리
 - 분석단계에서의 조건 중 하나로 사용신청(orderInfo)->결제(paymentInfo) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
