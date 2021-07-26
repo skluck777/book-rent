@@ -1047,7 +1047,7 @@ data:
 ```
 
 - Deploy 완료
-![image](https://user-images.githubusercontent.com/30138356/125383175-f7ccdb80-e3d1-11eb-81c5-522009d5a4ce.PNG)
+![15 Deploy완료](https://user-images.githubusercontent.com/85722736/126955172-1ad3844e-f50b-49e5-a435-938d85fccac0.JPG)
 
 
 ## 무정지 재배포(Readiness Probe)
