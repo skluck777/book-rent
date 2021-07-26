@@ -456,7 +456,7 @@ public interface OrderInfoRepository extends PagingAndSortingRepository<OrderInf
 ```
   # 재고 차감 내역 콘솔에서 확인
 ```
-  ![8](https://user-images.githubusercontent.com/30138356/125185587-a81ad280-e260-11eb-99d6-307c009821ca.PNG)
+ ![5 재고차감내역](https://user-images.githubusercontent.com/85722736/126930105-31432727-814d-4624-98e2-09979d6be602.JPG) 
 
 ## Correlation-key
 - 사용 반납 작업을 통해, Correlation-key 연결을 검증한다
