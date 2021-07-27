@@ -873,7 +873,7 @@ public class DashboardViewHandler {
 ```
 CQRS에 대한 테스트는 아래와 같다
 주문생성 시 주문 및 결제까지 정상적으로 수행 및 등록이 되며
-![12 CQRS테스트](https://user-images.githubusercontent.com/85722736/126935916-6f3cc304-6dfe-4fb8-ac79-bf1341ce2d56.JPG)
+![12 CQRS테스트_1](https://user-images.githubusercontent.com/85722736/127075129-a675105e-5102-4617-b0eb-d64f6aef888e.JPG)
 
 dashbaord CQRS 결과는 아래와 같다.
 
