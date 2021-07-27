@@ -1052,7 +1052,7 @@ data:
 
 ## Config Map
 
-- 변경 가능성이 있는 설정을 ConfigMap을 사용하여 관리  
+- 변경 가능성이 있는 설정을 ConfigMap을 사용하여 관리-컨테이너 이미지로부터 설정 정보 분리(환경 변수나 설정값을 변수로 관리)
   - order 서비스에서 바라보는 payment 서비스 url 일부분을 ConfigMap 사용하여 구현​  
 
 - order 서비스 내 FeignClient (order/src/main/java/cartoonrent/external/PaymentInfoService.java)
