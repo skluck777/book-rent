@@ -895,7 +895,8 @@ dashbaord CQRS 결과는 아래와 같다.
 		    <scope>runtime</scope>
 		</dependency>
 ```
-- 변경 후에도 정상 구동됨을 확인 (체크)
+- 변경 후에도 정상 구동됨을 확인
+
 ![폴리글랏퍼시스턴스확인](https://user-images.githubusercontent.com/85722736/127079654-a114da8f-6aa9-4697-bfff-eb3d9d282d3f.JPG)
 
 
