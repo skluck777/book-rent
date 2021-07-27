@@ -1187,7 +1187,7 @@ hystrix:
 
 ![21 오토스케일적용](https://user-images.githubusercontent.com/85722736/127078106-8f786c38-87ac-413e-8f6b-697a2023ec2e.JPG)
 
-- (오토스케일 적용 결과) siege -c10 -t10 -r10 -v --content-type "application/json" 'http://gateway:8080/order POST {"orderId" : 1, "customerId": 1}'
+-(오토스케일 적용 결과) 
 
 ![22 오토스케일적용결과](https://user-images.githubusercontent.com/85722736/127078146-743f1c8c-b0f7-4fe1-8849-224cb4084597.JPG)
 ![23 오토스케일적용결과_100](https://user-images.githubusercontent.com/85722736/127078182-416987d1-ac5e-44ba-ae8e-122619c08137.JPG)
