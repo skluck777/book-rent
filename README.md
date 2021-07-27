@@ -896,7 +896,7 @@ dashbaord CQRS 결과는 아래와 같다.
 		</dependency>
 ```
 - 변경 후에도 정상 구동됨을 확인 (체크)
-![구동확인1](https://user-images.githubusercontent.com/30138356/125391898-2782e000-e3e0-11eb-8f50-5c1a3ff963f8.PNG)
+![폴리글랏퍼시스턴스확인](https://user-images.githubusercontent.com/85722736/127079654-a114da8f-6aa9-4697-bfff-eb3d9d282d3f.JPG)
 
 
 # 운영
