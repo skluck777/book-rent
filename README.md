@@ -536,7 +536,7 @@ public interface PaymentInfoService {
 ```
 ![10 동기호출,fallbalck성공](https://user-images.githubusercontent.com/85722736/126933779-e55d9bf9-70b8-4bd9-abc5-93a6558ff841.JPG)
 
-과도한 요청시에 서비스 장애 벌어질 수 있음에 유의
+
 
 ## 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
 결제가 이루어진 후에 렌트승인 시스템으로 이를 알려주는 행위는 동기식이 아니라 비동기식으로 처리하여 대여를 위하여 결제가 블로킹 되지 않도록 처리한다.
