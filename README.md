@@ -1183,9 +1183,10 @@ hystrix:
 
 ![20 오토스케일미적용](https://user-images.githubusercontent.com/85722736/127004658-407e1eef-de59-494e-8cbc-a6cedd9b84ce.JPG)
 
-- (오토스케일 적용) kubectl autoscale deploy payment --min=1 --max=10 --cpu-percent=15
-![KakaoTalk_20210713_114857158](https://user-images.githubusercontent.com/30138356/125382849-69585a00-e3d1-11eb-95cf-cf69d29b5a44.png)
+-(오토스케일 적용) kubectl autoscale deploy payment --min=1 --max=10 --cpu-percent=15
+(삭제)![KakaoTalk_20210713_114857158](https://user-images.githubusercontent.com/30138356/125382849-69585a00-e3d1-11eb-95cf-cf69d29b5a44.png)
+![21 오토스케일적용](https://user-images.githubusercontent.com/85722736/127078106-8f786c38-87ac-413e-8f6b-697a2023ec2e.JPG)
 
-- (오토스케일 적용 결과) siege -c10 -t105 -r10 -v --content-type "application/json" 'http://gateway:8080/order POST {"orderId" : 1, "customerId": 1}'
-![KakaoTalk_20210713_114858955](https://user-images.githubusercontent.com/30138356/125382970-9a388f00-e3d1-11eb-9dd8-9c8359f79433.png)
-![KakaoTalk_20210713_114900577](https://user-images.githubusercontent.com/30138356/125382972-9ad12580-e3d1-11eb-8e54-7811f98966b8.png)
+- (오토스케일 적용 결과) siege -c10 -t10 -r10 -v --content-type "application/json" 'http://gateway:8080/order POST {"orderId" : 1, "customerId": 1}'
+![22 오토스케일적용결과](https://user-images.githubusercontent.com/85722736/127078146-743f1c8c-b0f7-4fe1-8849-224cb4084597.JPG)
+![23 오토스케일적용결과_100](https://user-images.githubusercontent.com/85722736/127078182-416987d1-ac5e-44ba-ae8e-122619c08137.JPG)
