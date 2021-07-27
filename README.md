@@ -1142,7 +1142,7 @@ data:
 
 - Hystrix 를 설정: 요청처리 쓰레드에서 처리시간이 610 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
 ```yml
-# cartoon-rent/Order/src/main/resources/application.yml (주석해제)
+# cartoon-rent/Order/src/main/resources/application.yml
 
 hystrix:
   command:
@@ -1151,7 +1151,7 @@ hystrix:
       execution.isolation.thread.timeoutInMilliseconds: 610
 ```
 
-- 피호출 서비스(결제:payment) 의 부하 처리 (Payment/src/main/java/cartoonrent/PaymentInfo.java) (주석해제)
+- 피호출 서비스(결제:payment) 의 부하 처리 (Payment/src/main/java/cartoonrent/PaymentInfo.java)
 ```JAVA
     @PostPersist
     public void onPostPersist(){
